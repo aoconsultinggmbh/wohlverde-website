@@ -439,7 +439,14 @@ def page_home():
 
 {insta_html(d)}
 <section class="sec--tight"><div class="wrap">
-<a class="streifen-item lime rv" href="{FIRMA["karriere"]}" rel="noopener">{ic("users")}<span><small>Karriere bei WOHLverde</small>Mach mit. Feste Teams, echte Perspektiven, auch für Quereinsteiger.</span>{ic("arrow")}</a>
+<a class="jobkarte rv" href="{FIRMA["karriere"]}" rel="noopener">
+<span class="jk-txt"><small>{ic("users")} Karriere bei WOHLverde</small>
+<b class="jk-titel">Mach mit.</b>
+<span class="jk-chips"><i>Feste Teams</i><i>Echte Perspektiven</i><i>Quereinsteiger willkommen</i></span>
+<span class="jk-btn">Offene Stellen ansehen {ic("arrow")}</span></span>
+<span class="jk-bild"><span class="frame">{pic("team-baum", "Das WOHLverde-Team gemeinsam an einem Baum", d, "(max-width: 860px) 100vw, 40vw", w=1800, h=1200)}</span>
+<svg class="jk-siegel" viewBox="0 0 120 120" aria-hidden="true"><defs><path id="jkk" d="M60,60 m-44,0 a44,44 0 1,1 88,0 a44,44 0 1,1 -88,0"/></defs><circle cx="60" cy="60" r="58"/><text><textPath href="#jkk" textLength="272" lengthAdjust="spacing">JETZT BEWERBEN • JETZT BEWERBEN •</textPath></text></svg></span>
+</a>
 </div></section>
 
 {form_section(d)}

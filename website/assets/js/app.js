@@ -179,9 +179,23 @@
   var mark = d.querySelector(".foot .mark");
   function passen() {
     if (!mark) return;
-    mark.style.fontSize = "100px";
-    var ziel = mark.parentElement.clientWidth * 0.99, ist = mark.getBoundingClientRect().width;
-    if (ist) mark.style.fontSize = (100 * ziel / ist).toFixed(2) + "px";
+    var W = mark.parentElement.clientWidth;
+    mark.style.fontSize = "100px"; mark.style.marginLeft = "0px";
+    var cs = getComputedStyle(mark), w100 = mark.getBoundingClientRect().width;
+    var ls = parseFloat(cs.letterSpacing) || 0, txt = mark.textContent.trim();
+    var links = 0, rechts = 0;
+    try {
+      var c = d.createElement("canvas").getContext("2d");
+      c.font = cs.fontStyle + " " + cs.fontWeight + " 100px " + cs.fontFamily;
+      var a = c.measureText(txt.charAt(0)), z = c.measureText(txt.charAt(txt.length - 1));
+      links = -(a.actualBoundingBoxLeft || 0);
+      rechts = z.width - (z.actualBoundingBoxRight || z.width);
+    } catch (e) {}
+    var tinte = w100 - ls - links - rechts;
+    if (!tinte) return;
+    var f = (W + 1) / tinte;
+    mark.style.fontSize = (100 * f).toFixed(3) + "px";
+    mark.style.marginLeft = (-(links * f) - 0.5).toFixed(2) + "px";
   }
   if (mark) { passen(); window.addEventListener("resize", passen); if (d.fonts && d.fonts.ready) d.fonts.ready.then(passen); }
 

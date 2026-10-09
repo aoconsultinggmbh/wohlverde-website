@@ -794,3 +794,7 @@ a.feat--link{text-decoration:none;color:inherit}
   .foot-bottom{margin-top:clamp(64px,5vw,96px);border-top-color:rgba(255,255,255,.14)}
   .foot{padding-bottom:calc(clamp(60px,5vw,90px) + env(safe-area-inset-bottom))}
 }
+.foot .mark{left:0;transform:none;margin-right:0}
+@media (min-width:1101px){.foot .mark{left:0;transform:none}}
+.flogo-link{display:inline-block;transition:opacity .25s}
+.flogo-link:hover{opacity:.8}

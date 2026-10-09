@@ -181,7 +181,7 @@ def footer(depth):
 <div class="wrap">
 <div class="foot-grid">
 <div>
-<img class="flogo" src="{p}assets/img/logo-neg.png" alt="WOHLverde" width="1212" height="265" loading="lazy">
+<a class="flogo-link" href="{p}" aria-label="WOHLverde Startseite"><img class="flogo" src="{p}assets/img/logo-neg.png" alt="WOHLverde Logo" width="1212" height="265" loading="lazy"></a>
 <p>Grünpflege, Gebäudereinigung und Hausmeisterservice für Unternehmen, Hausverwaltungen und Kommunen im Raum Bruchsal, Karlsruhe und Bretten.</p>
 <p>Aus <strong>H&amp;G WOHL</strong> wurde <strong>WOHLverde</strong>: gleiches Team, gleicher Anspruch.</p>
 <div class="soc"><a href="{FIRMA["instagram"]}" rel="noopener" aria-label="WOHLverde auf Instagram">{ic("insta")}</a><a href="{FIRMA["facebook"]}" rel="noopener" aria-label="WOHLverde auf Facebook">{ic("fb")}</a></div>

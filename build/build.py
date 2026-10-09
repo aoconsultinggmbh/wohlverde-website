@@ -65,8 +65,8 @@ def pic(name, alt, depth, sizes="(max-width: 900px) 100vw, 50vw", eager=False, c
     p = pre(depth) + "assets/img/"
     load = 'fetchpriority="high" loading="eager"' if eager else 'loading="lazy"'
     return (f'<picture{(" class=" + chr(34) + cls + chr(34)) if cls else ""}>'
-            f'<source type="image/webp" srcset="{p}{name}-600.webp 600w, {p}{name}-900.webp 900w, {p}{name}.webp {w}w" sizes="{sizes}">'
-            f'<img src="{p}{name}-900.jpg" srcset="{p}{name}-600.jpg 600w, {p}{name}-900.jpg 900w, {p}{name}.jpg {w}w" sizes="{sizes}" alt="{esc(alt)}" width="{w}" height="{h}" {load} decoding="async"{(' data-focus="%d %d"' % FOCUS[name]) if name in FOCUS else ""}></picture>')
+            f'<source type="image/webp" srcset="{p}{name}-600.webp 600w, {p}{name}-750.webp 750w, {p}{name}-900.webp 900w, {p}{name}.webp {w}w" sizes="{sizes}">'
+            f'<img src="{p}{name}-900.jpg" srcset="{p}{name}-600.jpg 600w, {p}{name}-750.jpg 750w, {p}{name}-900.jpg 900w, {p}{name}.jpg {w}w" sizes="{sizes}" alt="{esc(alt)}" width="{w}" height="{h}" {load} decoding="async"{(' data-focus="%d %d"' % FOCUS[name]) if name in FOCUS else ""}></picture>')
 
 def btn(href, text, kind="", icon="arrow"):
     k = f" btn--{kind}" if kind else ""
@@ -340,8 +340,21 @@ def lcp_preload(c):
     tag = f'<link rel="preload" as="image" type="image/webp" imagesrcset="{m.group(1)}" imagesizes="{m.group(2)}" fetchpriority="high">\n'
     return c.replace('<link rel="preconnect" href="https://use.typekit.net"', tag + '<link rel="preconnect" href="https://use.typekit.net"', 1)
 
+CSS_INLINE = None
+def css_inline(c):
+    global CSS_INLINE
+    if CSS_INLINE is None:
+        CSS_INLINE = open(os.path.join(ROOT, "assets/css/style.css"), encoding="utf-8").read()
+        CSS_INLINE = re.sub(r"/\*.*?\*/", "", CSS_INLINE, flags=re.S)
+        CSS_INLINE = re.sub(r"\s*\n\s*", " ", CSS_INLINE)
+        CSS_INLINE = re.sub(r"\s*([{};])\s*", r"\1", CSS_INLINE)
+    m = re.search(r'<link rel="stylesheet" href="((?:\.\./)*)assets/css/style\.css\?v=[^"]*">', c)
+    if not m: return c
+    css = CSS_INLINE.replace('url("../', 'url("' + m.group(1) + "assets/").replace("url(../", "url(" + m.group(1) + "assets/")
+    return c.replace(m.group(0), "<style>" + css + "</style>")
+
 def write(path, content):
-    if path.endswith(".html"): content = lcp_preload(neuer_tab(content))
+    if path.endswith(".html"): content = css_inline(lcp_preload(neuer_tab(content)))
     full = os.path.join(ROOT, path)
     os.makedirs(os.path.dirname(full), exist_ok=True)
     with open(full, "w", encoding="utf-8") as f:

@@ -39,6 +39,7 @@ $d = [
     'Leistungen'     => feld('leistung', 300),
     'Nachricht'      => feld('nachricht', 5000),
 ];
+$herkunft = ['Gesendet von' => feld('seite', 200), 'Kampagne' => feld('kampagne', 400)];
 $ds = feld('datenschutz', 5);
 
 // Pflichtfelder (dritte Pruefung nach Browser und app.js)
@@ -51,6 +52,7 @@ foreach (['Ansprechpartner', 'E-Mail', 'Unternehmen', 'Telefon'] as $k) {
 // Mail an WOHLverde
 $text = "Neue Anfrage über wohlverde.de\n\n";
 foreach ($d as $k => $v) { if ($v !== '') $text .= str_pad($k . ':', 17) . ($k === 'Nachricht' ? "\n" . $v : $v) . "\n"; }
+foreach ($herkunft as $k => $v) { if ($v !== '') $text .= "\n" . $k . ': ' . $v; }
 $text .= "\nGesendet am " . date('d.m.Y') . ' um ' . date('H:i') . " Uhr\n";
 
 $betreff = 'Anfrage über wohlverde.de: ' . ($d['Unternehmen'] !== '' ? $d['Unternehmen'] : $d['Ansprechpartner']);

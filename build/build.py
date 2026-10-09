@@ -45,6 +45,8 @@ def art(kind, depth, cls=""):
         return f'<div class="art {cls}" aria-hidden="true">{fl}<img class="art-ic" src="{p}assets/icons/rechen_neg.png" alt="" style="opacity:.25;width:40%"></div>'
     return f'<div class="art {cls}" aria-hidden="true"><img class="art-ic" src="{p}assets/icons/schraubenzieher_neg.png" alt=""><img class="art-ic k2" src="{p}assets/icons/schluessel_neg.png" alt=""></div>'
 
+FOCUS = {'fahrzeug-transporter': (50, 45), 'garten-graeser': (50, 22), 'garten-hecke-sommer': (60, 13), 'garten-heckenschere': (45, 15), 'garten-maeher': (52, 17), 'garten-pflanzen': (48, 15), 'hausmeister-kehren': (45, 38), 'hausmeister-portrait': (50, 20), 'hausmeister-runde': (45, 22), 'hausmeister-fenster': (55, 30), 'juni-portrait-hut': (52, 22), 'marke-schild': (52, 30), 'nachher-pflaster': (50, 50), 'vorher-pflaster': (50, 50), 'objekt-abstimmung': (50, 19), 'reinigung-buero': (55, 12), 'reinigung-buero-wisch': (35, 12), 'reinigung-duo': (55, 15), 'reinigung-fenster': (52, 27), 'reinigung-fenster-ruecken': (50, 40), 'reinigung-tisch': (50, 22), 'reinigung-treppe-ruecken': (45, 30), 'reinigung-treppenhaus': (40, 30), 'team-azubi': (50, 20), 'team-baum': (50, 45), 'team-fahrzeug': (50, 45), 'team-gruppe': (50, 35), 'team-unterwegs': (50, 50)}  # Gesichtsposition in Prozent (x, y), damit kein Kopf abgeschnitten wird
+
 def pre(depth):  # relativer Pfad zur Wurzel
     return "../" * depth
 
@@ -53,7 +55,7 @@ def pic(name, alt, depth, sizes="(max-width: 900px) 100vw, 50vw", eager=False, c
     load = 'fetchpriority="high" loading="eager"' if eager else 'loading="lazy"'
     return (f'<picture{(" class=" + chr(34) + cls + chr(34)) if cls else ""}>'
             f'<source type="image/webp" srcset="{p}{name}-900.webp 900w, {p}{name}.webp {w}w" sizes="{sizes}">'
-            f'<img src="{p}{name}-900.jpg" srcset="{p}{name}-900.jpg 900w, {p}{name}.jpg {w}w" sizes="{sizes}" alt="{esc(alt)}" width="{w}" height="{h}" {load} decoding="async"{(' style="object-position:' + pos + '"') if pos else ""}></picture>')
+            f'<img src="{p}{name}-900.jpg" srcset="{p}{name}-900.jpg 900w, {p}{name}.jpg {w}w" sizes="{sizes}" alt="{esc(alt)}" width="{w}" height="{h}" {load} decoding="async"{(' data-focus="%d %d"' % FOCUS[name]) if name in FOCUS else ""}></picture>')
 
 def btn(href, text, kind="", icon="arrow"):
     k = f" btn--{kind}" if kind else ""
@@ -139,13 +141,14 @@ def header(depth, active=""):
         cur = ' aria-current="page"' if key == active else ""
         return f'<a href="{p}{href}"{cur}>{text}</a>'
     dd = "".join(f'<a href="{p}{l["url"].lstrip("/")}"><img src="{p}assets/icons/{l["icon"]}_pos.png" alt="" width="34" height="34"><span>{l["name"]}<small>{l["dd"]}</small></span></a>' for l in LEISTUNGEN)
+    dd_orte = "".join(f'<a href="{p}einsatzgebiet/{o["slug"]}/"><span class="pin">{ic("pin")}</span><span>{o["name"]}<small>{o["zeile"]}</small></span></a>' for o in ORTE) + f'<a class="dd-all" href="{p}einsatzgebiet/"><span>Alle Orte im Überblick</span>{ic("arrow")}</a>'
     return f'''<header class="top">
 <div class="wrap">
 <a class="logo" href="{p}" aria-label="WOHLverde Startseite"><img class="l-light" src="{p}assets/img/logo-neg.png" alt="WOHLverde Grünpflege und Gebäudereinigung" width="1212" height="265"><img class="l-dark" src="{p}assets/img/logo-pos.png" alt="WOHLverde Grünpflege und Gebäudereinigung" width="1212" height="265"></a>
 <button class="burger" aria-label="Menü öffnen" aria-expanded="false" aria-controls="hauptnav"><span></span><span></span><span></span></button>
 <nav class="nav" id="hauptnav" aria-label="Hauptnavigation">
 <div class="dd"><button class="navbtn" aria-expanded="false" aria-haspopup="true">Leistungen <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button><div class="dd-menu">{dd}</div></div>
-{a("einsatzgebiet/", "Einsatzgebiet", "einsatz")}
+<div class="dd"><button class="navbtn" aria-expanded="false" aria-haspopup="true">Einsatzgebiet <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button><div class="dd-menu dd-orte">{dd_orte}</div></div>
 {a("ueber-uns/", "Über uns", "ueber")}
 <a href="{FIRMA["karriere"]}" rel="noopener">Karriere</a>
 {a("kontakt/", "Kontakt", "kontakt")}
@@ -257,11 +260,17 @@ def form_html(depth, dark=True):
 <fieldset class="fld"><legend>Was dürfen wir übernehmen?</legend><div class="chips">{chips}</div></fieldset>
 <div class="fld req"><label for="f-msg">Ihre Nachricht *</label><textarea id="f-msg" name="nachricht" required placeholder="Größe der Fläche, gewünschter Rhythmus, Startzeitpunkt …"></textarea><span class="err">Bitte beschreiben Sie kurz Ihr Anliegen.</span></div>
 <div class="hp" aria-hidden="true"><label for="f-web">Bitte frei lassen</label><input id="f-web" name="website" tabindex="-1" autocomplete="off"></div>
-<input type="hidden" name="ts" value="">
+<input type="hidden" name="ts" value=""><input type="hidden" name="seite" value=""><input type="hidden" name="kampagne" value="">
 <div class="fld req" style="margin:0"><label class="consent"><input type="checkbox" name="datenschutz" value="ja" required><span>Ich bin einverstanden, dass meine Angaben zur Bearbeitung der Anfrage verwendet werden. Mehr dazu in der <a href="{p}datenschutz/">Datenschutzerklärung</a>. *</span></label><span class="err">Bitte stimmen Sie der Verarbeitung zu.</span></div>
 <button class="btn btn--petrol" type="submit" style="width:100%"><span>Anfrage senden</span>{ic("arrow")}</button>
 <div class="form-msg" role="status" aria-live="polite"></div>
 </form>'''
+
+def form_section(depth, title="Lassen Sie uns über Ihr Objekt sprechen.", text="Schreiben Sie uns kurz, worum es geht. Wir melden uns in der Regel innerhalb eines Werktags und vereinbaren einen unverbindlichen Vor-Ort-Termin."):
+    return f'''<section class="sec dark" id="anfrage-form"><div class="wrap form-wrap">
+<div class="rv"><span class="eyebrow">Angebot anfragen</span><h2>{title}</h2><p class="lead">{text}</p>{contact_list()}</div>
+<div class="rv d1">{form_html(depth)}</div>
+</div></section>'''
 
 def contact_list():
     return f'''<ul class="contact-list">
@@ -411,7 +420,7 @@ def page_home():
 
 {insta_html(d)}
 {career_html(d)}
-{cta_html(d)}
+{form_section(d)}
 '''
     write("index.html", head(title, desc, "/", d, schema) + header(d) + body + footer(d))
 
@@ -468,7 +477,7 @@ def page_leistung(l):
 <span class="eyebrow">Alles aus einer Hand</span><h2 style="margin-bottom:28px">Weitere Leistungen</h2>
 <div class="places places--3">{other}</div>
 </div></section>
-{cta_html(d)}
+{form_section(d, f"Angebot für {l['name']} anfragen.")}
 '''
     write(url.strip("/") + "/index.html", head(title, desc, url, d, schema, og_img=l["bild"] + ".jpg") + header(d) + body + footer(d))
 
@@ -541,7 +550,7 @@ def page_ort(o):
 <div class="rv"><span class="eyebrow">Fragen aus {n}</span><h2>Gut zu wissen.</h2>{btn("../../kontakt/", "Kontakt aufnehmen", "petrol")}</div>
 {faq_html(faqs)}
 </div></section>
-{cta_html(d, f"Objekt in {n}? Wir schauen es uns an.")}
+{form_section(d, f"Objekt in {n}? Wir schauen es uns an.")}
 '''
     write(f"einsatzgebiet/{o['slug']}/index.html", head(title, desc, url, d, schema, og_img=o["bild"] + ".jpg") + header(d, "einsatz") + body + footer(d))
 

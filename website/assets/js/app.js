@@ -2,6 +2,9 @@
 (function () {
   "use strict";
   var d = document, root = d.documentElement;
+  var me = d.currentScript || d.querySelector('script[src*="assets/js/app.js"]');
+  var BASE = me ? me.getAttribute("src").replace(/assets\/js\/app\.js.*$/, "") : "/";
+  var still = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   root.classList.remove("no-js");
 
   /* Kopfzeile beim Scrollen, mobile Leiste ausblenden am Seitenende */
@@ -80,6 +83,14 @@
   var form = d.getElementById("anfrage");
   if (form) {
     var ts = form.querySelector("[name=ts]"); if (ts) ts.value = Date.now();
+    /* Woher kommt die Anfrage? Seite und Kampagnen-Parameter der aktuellen Adresse (nichts wird gespeichert) */
+    var sf = form.querySelector("[name=seite]"); if (sf) sf.value = location.pathname;
+    var kf = form.querySelector("[name=kampagne]");
+    if (kf) { var q = new URLSearchParams(location.search), k = [];
+      ["utm_source", "utm_medium", "utm_campaign", "utm_term", "gclid"].forEach(function (x) { if (q.get(x)) k.push(x + "=" + q.get(x).slice(0, 80)); });
+      kf.value = k.join(" | "); }
+    /* Auf Seiten mit Formular springen "Angebot anfragen"-Knoepfe direkt dorthin */
+    d.querySelectorAll('a[href$="kontakt/#anfrage-form"]').forEach(function (a) { a.setAttribute("href", "#anfrage-form"); });
     var msg = form.querySelector(".form-msg");
     function check(fld) {
       var inp = fld.querySelector("input,textarea,select"); if (!inp) return true;
@@ -109,7 +120,7 @@
         })
         .catch(function () {
           var body = [];
-          data.forEach(function (v, k) { if (["website", "ts", "datenschutz"].indexOf(k) < 0 && v) body.push(k + ": " + v); });
+          data.forEach(function (v, k) { if (["website", "ts", "datenschutz", "seite", "kampagne"].indexOf(k) < 0 && v) body.push(k + ": " + v); });
           msg.className = "form-msg bad";
           msg.innerHTML = 'Der Versand hat leider nicht geklappt. <a href="mailto:info@wohlverde.de?subject=' + encodeURIComponent("Anfrage über wohlverde.de") + "&body=" + encodeURIComponent(body.join("\n")) + '">Anfrage per E-Mail senden</a> oder rufen Sie uns an: <a href="tel:+4972513924446">07251 3924446</a>.';
           btn.disabled = false; btn.querySelector("span").textContent = "Anfrage senden";
@@ -121,6 +132,50 @@
   d.addEventListener("click", function (e) {
     var a = e.target.closest && e.target.closest('a[href^="tel:"]');
     if (a && window.aoConversion) window.aoConversion("anruf");
+  });
+
+  /* Bildausschnitt: Gesicht immer im oberen Drittel des sichtbaren Bereichs */
+  function fokus(img) {
+    var f = (img.getAttribute("data-focus") || "").split(" ");
+    if (f.length < 2) return;
+    var fx = parseFloat(f[0]) / 100, fy = parseFloat(f[1]) / 100;
+    var iw = img.naturalWidth || parseFloat(img.getAttribute("width")), ih = img.naturalHeight || parseFloat(img.getAttribute("height"));
+    var bw = img.clientWidth, bh = img.clientHeight;
+    if (!iw || !ih || !bw || !bh) return;
+    var sc = Math.max(bw / iw, bh / ih), vw = bw / sc / iw, vh = bh / sc / ih;
+    function pos(c, v, ziel) { if (v >= 0.999) return 50; var t = Math.min(Math.max(c - ziel * v, 0), 1 - v); return t / (1 - v) * 100; }
+    img.style.objectPosition = pos(fx, vw, 0.5).toFixed(1) + "% " + pos(fy, vh, 0.36).toFixed(1) + "%";
+  }
+  var fimgs = d.querySelectorAll("img[data-focus]");
+  fimgs.forEach(function (img) { if (img.complete) fokus(img); img.addEventListener("load", function () { fokus(img); }); });
+  if ("ResizeObserver" in window) { var ro = new ResizeObserver(function (es) { es.forEach(function (e) { fokus(e.target); }); }); fimgs.forEach(function (i) { ro.observe(i); }); }
+
+  /* Werkzeuge und Schriftzug im Hintergrund der Petrol-Flaechen */
+  var WZ = ["heckenschere", "scheibenabzieher", "schraubenzieher", "rechen", "spruehflasche", "laubblaeser", "schluessel", "rasenmaeher", "staubwedel"];
+  d.querySelectorAll(".hero, .phead, section.dark, .cta").forEach(function (sec, si) {
+    var deko = d.createElement("div"); deko.className = "deko"; deko.setAttribute("aria-hidden", "true");
+    var n = sec.classList.contains("cta") ? 3 : 6;
+    for (var i = 0; i < n; i++) {
+      var im = d.createElement("img"); im.alt = ""; im.loading = "lazy";
+      im.src = BASE + "assets/icons/" + WZ[(si * 3 + i) % WZ.length] + "_neg.png";
+      var sz = 70 + ((si * 37 + i * 53) % 110);
+      im.style.width = sz + "px"; im.style.left = ((i * 23 + si * 17) % 92) + "%"; im.style.top = ((i * 41 + si * 29) % 85) + "%";
+      im.style.animationDelay = (-i * 3.7) + "s"; im.setAttribute("data-depth", (0.4 + (i % 3) * 0.35).toFixed(2));
+      deko.appendChild(im);
+    }
+    sec.insertBefore(deko, sec.firstChild);
+    if (!sec.classList.contains("hero") && !sec.classList.contains("cta")) {
+      var mk = d.createElement("span"); mk.className = "mark"; mk.setAttribute("aria-hidden", "true"); mk.textContent = "WOHLverde";
+      sec.insertBefore(mk, sec.firstChild);
+    }
+    if (still || !window.matchMedia("(hover: hover)").matches) return;
+    var glow = d.createElement("span"); glow.className = "cursor-glow"; sec.insertBefore(glow, sec.firstChild);
+    sec.addEventListener("mousemove", function (e) {
+      var r = sec.getBoundingClientRect(), x = e.clientX - r.left, y = e.clientY - r.top;
+      glow.style.left = x + "px"; glow.style.top = y + "px";
+      var dx = (x / r.width - 0.5), dy = (y / r.height - 0.5);
+      deko.querySelectorAll("img").forEach(function (im) { var k = parseFloat(im.getAttribute("data-depth")) * 30; im.style.transform = "translate(" + (-dx * k) + "px," + (-dy * k) + "px)"; });
+    });
   });
 
   /* Jahr im Fuss */

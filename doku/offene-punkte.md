@@ -38,3 +38,9 @@ Stand: 09.10.2026, gebaut von Awan Tofik (AO Consulting) mit Claude.
 - Schnell und datensparsam: Bilder als WebP, ohne Einwilligung keine Cookies; Google Ads nur nach Zustimmung über ein eigenes, schlankes Einwilligungsfenster.
 - Anfrageformular für Firmen mit Objektart und Leistungsauswahl, Eingangsbestätigung an den Kunden.
 - Mobile Schnellleiste "Anrufen / Angebot anfragen".
+
+## Anfrageformular und Messung (Stand 09.10.2026)
+
+- Das Formular steht auf der Startseite, auf allen Leistungs- und Ortsseiten und auf der Kontaktseite (gleiches Formular, gleiches Skript). Grund: Google-Ads-Besucher landen auf einer Unterseite und sollen dort ohne weiteren Klick anfragen können.
+- Jede Anfrage-Mail enthält "Gesendet von: /seite/" und, falls in der Adresse vorhanden, utm-Parameter und gclid. So sieht Nico ohne Cookies, welche Seite und welche Kampagne Anfragen bringt.
+- Mit der Google-Ads-Kennung zählt zusätzlich die Conversion "Anfrage gesendet" auf jeder dieser Seiten.

@@ -8,7 +8,7 @@
 
 :root{
   --petrol:#003a41; --petrol-2:#004a52; --petrol-9:#00272c; --lime:#c7d764; --lime-2:#d9e48f;
-  --beton:#79969f; --beton-2:#cdd8db; --sand:#f3f4ee; --paper:#fbfbf8; --ink:#0d2326; --muted:#4f6468;
+  --beton:#79969f; --beton-2:#cdd8db; --sand:#f3f4ef; --paper:#f3f4ef; --ink:#0d2326; --muted:#4f6468;
   --radius:28px; --radius-s:16px; --wrap:1600px; --gut:clamp(16px,4vw,40px);
   --shadow:0 30px 60px -30px rgba(0,39,44,.45);
   --ease:cubic-bezier(.2,.7,.2,1);
@@ -750,3 +750,39 @@ a.feat--link{text-decoration:none;color:inherit}
 .kurz-box strong{color:var(--petrol)}
 .stand{font-size:14px;color:var(--muted);margin-top:32px}
 @media (max-width:960px){.artikel-wrap{grid-template-columns:1fr}.artikel-aside{position:static}}
+.form-titel{font-weight:700;font-size:clamp(21px,1.8vw,26px);line-height:1.15;color:var(--petrol);margin:0 0 4px}
+.artikel-txt h2{font-size:21px;line-height:1.2;letter-spacing:-.01em;margin:0 0 .45em}
+.deko img{height:auto}
+
+/* Glossar */
+.g-az{display:flex;flex-wrap:wrap;gap:8px;margin-top:28px}
+.g-az a{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);color:#fff;text-decoration:none;font-weight:700;transition:background .25s,color .25s}
+.g-az a:hover{background:var(--lime);color:var(--petrol)}
+.glossar .g-buchstabe{font-size:clamp(40px,5vw,64px);color:var(--lime);-webkit-text-stroke:1.5px var(--petrol);margin:48px 0 18px;scroll-margin-top:110px}
+.glossar .g-buchstabe:first-child{margin-top:0}
+.g-liste{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.g-term{background:#fff;border:1px solid #e3e7df;border-radius:var(--radius-s);padding:22px 24px;scroll-margin-top:110px;transition:border-color .3s,box-shadow .3s}
+.g-term:target{border-color:var(--lime);box-shadow:0 0 0 4px rgba(199,215,100,.35)}
+.g-term:hover{border-color:var(--lime)}
+.g-term h3{font-size:20px;margin:0 0 8px}
+.g-term p{margin:0 0 12px;color:var(--muted)}
+.g-mehr{display:inline-flex;align-items:center;gap:8px;font-weight:700;color:var(--petrol);text-decoration:none;font-size:15px}
+.g-mehr svg{width:16px;transition:transform .3s}
+.g-mehr:hover svg{transform:translateX(5px)}
+@media (max-width:760px){.g-liste{grid-template-columns:1fr}.g-az a{width:38px;height:38px}}
+.glossar-teaser{display:flex;align-items:center;gap:18px;padding:24px 28px;margin-bottom:24px;border-radius:var(--radius);background:var(--petrol);color:#fff;text-decoration:none;transition:transform .35s var(--ease)}
+.glossar-teaser:hover{transform:translateY(-4px)}
+.glossar-teaser .pin{width:56px;height:56px;border-radius:16px;background:var(--lime);display:grid;place-items:center;flex:none}
+.glossar-teaser .pin svg{width:26px;height:26px;color:var(--petrol)}
+.glossar-teaser small{display:block;font-size:12px;letter-spacing:.12em;text-transform:uppercase;opacity:.75;font-weight:600}
+.glossar-teaser b{display:block;font-size:clamp(20px,1.8vw,26px);line-height:1.2}
+.glossar-teaser>svg{width:24px;margin-left:auto;color:var(--lime);flex:none}
+.artikel .frame{overflow:hidden;flex:none;position:relative}
+.artikel .frame picture{display:block;height:100%}
+.artikel .frame img{position:absolute;inset:0;transition:transform .8s var(--ease)}
+.artikel:hover .frame img{transform:scale(1.05)}
+.glossar .g-gruppe{display:grid;grid-template-columns:120px minmax(0,1fr);gap:24px;padding:36px 0;border-top:1px solid #e3e7df}
+.glossar .g-gruppe:first-child{border-top:0;padding-top:0}
+.glossar .g-gruppe .g-buchstabe{margin:0;position:sticky;top:110px;align-self:start;line-height:1}
+@media (max-width:760px){.glossar .g-gruppe{grid-template-columns:1fr;gap:14px;padding:28px 0}.glossar .g-gruppe .g-buchstabe{position:static}}
+.glossar .stand{margin-top:40px;color:var(--muted);font-size:14px}

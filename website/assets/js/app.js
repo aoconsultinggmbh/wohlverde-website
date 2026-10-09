@@ -157,7 +157,7 @@
     var deko = d.createElement("div"); deko.className = "deko"; deko.setAttribute("aria-hidden", "true");
     var n = sec.classList.contains("cta") ? 3 : 6;
     for (var i = 0; i < n; i++) {
-      var im = d.createElement("img"); im.alt = ""; im.loading = "lazy";
+      var im = d.createElement("img"); im.alt = ""; im.loading = "lazy"; im.width = 160; im.height = 160;
       im.src = BASE + "assets/icons/" + WZ[(si * 3 + i) % WZ.length] + "_neg.png";
       var sz = 70 + ((si * 37 + i * 53) % 110);
       im.style.width = sz + "px"; im.style.left = ((i * 23 + si * 17) % 92) + "%"; im.style.top = ((i * 41 + si * 29) % 85) + "%";

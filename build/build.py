@@ -56,7 +56,7 @@ def art(kind, depth, cls=""):
     k2 = f'<img class="art-ic k2" src="{p}assets/icons/{neben}_neg.png" alt="">' if neben else ""
     return f'<div class="art {cls}" aria-hidden="true">{teile}<img class="art-ic" src="{p}assets/icons/{haupt}_neg.png" alt="">{k2}</div>'
 
-FOCUS = {'baum-motorsaege': (47, 12), 'baum-schnitt': (75, 20), 'baum-kletterer': (55, 35), 'baum-ast': (50, 40), 'fahrzeug-transporter': (50, 45), 'garten-graeser': (50, 22), 'garten-hecke-sommer': (60, 13), 'garten-heckenschere': (45, 15), 'garten-maeher': (52, 17), 'garten-pflanzen': (48, 15), 'hausmeister-kehren': (45, 38), 'hausmeister-portrait': (50, 20), 'hausmeister-runde': (45, 22), 'hausmeister-fenster': (55, 30), 'juni-portrait-hut': (52, 22), 'marke-schild': (52, 30), 'nachher-pflaster': (50, 50), 'vorher-pflaster': (50, 50), 'objekt-abstimmung': (50, 19), 'reinigung-buero': (55, 12), 'reinigung-buero-wisch': (35, 12), 'reinigung-duo': (55, 15), 'reinigung-fenster': (52, 27), 'reinigung-fenster-ruecken': (50, 40), 'reinigung-tisch': (50, 22), 'reinigung-treppe-ruecken': (45, 30), 'reinigung-treppenhaus': (40, 30), 'team-azubi': (50, 20), 'team-baum': (50, 45), 'team-fahrzeug': (50, 45), 'team-gruppe': (50, 35), 'team-unterwegs': (50, 50)}  # Gesichtsposition in Prozent (x, y), damit kein Kopf abgeschnitten wird
+FOCUS = {'baum-motorsaege': (47, 12), 'baum-schnitt': (75, 20), 'baum-kletterer': (55, 35), 'baum-ast': (50, 40), 'fahrzeug-transporter': (50, 45), 'garten-graeser': (50, 22), 'garten-hecke-sommer': (60, 13), 'garten-heckenschere': (45, 15), 'garten-maeher': (52, 17), 'garten-pflanzen': (48, 15), 'hausmeister-kehren': (45, 38), 'hausmeister-portrait': (50, 20), 'hausmeister-runde': (45, 22), 'hausmeister-fenster': (55, 24), 'juni-portrait-hut': (52, 22), 'marke-schild': (52, 30), 'nachher-pflaster': (50, 50), 'vorher-pflaster': (50, 50), 'objekt-abstimmung': (50, 19), 'reinigung-buero': (55, 12), 'reinigung-buero-wisch': (35, 8), 'reinigung-duo': (55, 15), 'reinigung-fenster': (52, 27), 'reinigung-fenster-ruecken': (50, 28), 'reinigung-tisch': (50, 12), 'reinigung-treppe-ruecken': (45, 16), 'reinigung-treppenhaus': (40, 30), 'team-azubi': (50, 20), 'team-baum': (50, 45), 'team-fahrzeug': (50, 45), 'team-gruppe': (50, 35), 'team-unterwegs': (50, 50)}  # Gesichtsposition in Prozent (x, y), damit kein Kopf abgeschnitten wird
 
 def pre(depth):  # relativer Pfad zur Wurzel
     return "../" * depth
@@ -120,7 +120,7 @@ def ld(*objs, page_url, page_name, page_type="WebPage", desc=""):
     return '<script type="application/ld+json">' + json.dumps({"@context": "https://schema.org", "@graph": graph}, ensure_ascii=False) + "</script>"
 
 # ---------- Rahmen ----------
-def head(title, desc, url, depth, schema, og_img="team-fahrzeug.jpg", light=False):
+def head(title, desc, url, depth, schema, og_img="og-wohlverde.jpg", light=False):
     p = pre(depth)
     return f'''<!doctype html>
 <html lang="de" class="no-js">
@@ -162,7 +162,7 @@ def header(depth, active=""):
 <nav class="nav" id="hauptnav" aria-label="Hauptnavigation">
 <div class="dd"><button class="navbtn" aria-expanded="false" aria-haspopup="true">Leistungen <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button><div class="dd-menu">{dd}</div></div>
 <div class="dd"><button class="navbtn" aria-expanded="false" aria-haspopup="true">Einsatzgebiet <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button><div class="dd-menu dd-orte">{dd_orte}</div></div>
-<div class="dd"><button class="navbtn" aria-expanded="false" aria-haspopup="true">Über uns <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button><div class="dd-menu dd-orte"><a href="{p}ueber-uns/"><span class="pin">{ic("users")}</span><span>Über uns<small>Team, Werte, Geschichte</small></span></a><a href="{p}referenzen/"><span class="pin">{ic("star")}</span><span>Referenzen<small>Kunden und Ergebnisse</small></span></a><a href="{p}ratgeber/"><span class="pin">{ic("doc")}</span><span>Ratgeber<small>Wissen für Objektverantwortliche</small></span></a></div></div>
+<div class="dd"><button class="navbtn" aria-expanded="false" aria-haspopup="true">Über uns <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button><div class="dd-menu dd-orte"><a href="{p}ueber-uns/"><span class="pin">{ic("users")}</span><span>Über uns<small>Team, Werte, Geschichte</small></span></a><a href="{p}referenzen/"><span class="pin">{ic("star")}</span><span>Referenzen<small>Kunden und Ergebnisse</small></span></a><a href="{p}ratgeber/"><span class="pin">{ic("doc")}</span><span>Ratgeber<small>Wissen für Objektverantwortliche</small></span></a><a href="{p}ratgeber/glossar/"><span class="pin">{ic("layers")}</span><span>Glossar<small>{len(GLOSSAR)} Fachbegriffe erklärt</small></span></a></div></div>
 <a href="{FIRMA["karriere"]}" rel="noopener">Karriere</a>
 {a("kontakt/", "Kontakt", "kontakt")}
 <a class="btn" href="{p}kontakt/#anfrage-form"><span>Angebot anfragen</span></a>
@@ -187,7 +187,7 @@ def footer(depth):
 <div class="soc"><a href="{FIRMA["instagram"]}" rel="noopener" aria-label="WOHLverde auf Instagram">{ic("insta")}</a><a href="{FIRMA["facebook"]}" rel="noopener" aria-label="WOHLverde auf Facebook">{ic("fb")}</a></div>
 </div>
 <div><h4>Leistungen</h4><ul>{lst}</ul></div>
-<div><h4>Einsatzgebiet</h4><ul>{orte}<li><a href="{p}einsatzgebiet/">Alle Orte</a></li></ul><h4 style="margin-top:28px">WOHLverde</h4><ul><li><a href="{p}ueber-uns/">Über uns</a></li><li><a href="{p}referenzen/">Referenzen</a></li><li><a href="{p}ratgeber/">Ratgeber</a></li></ul></div>
+<div><h4>Einsatzgebiet</h4><ul>{orte}<li><a href="{p}einsatzgebiet/">Alle Orte</a></li></ul><h4 style="margin-top:28px">WOHLverde</h4><ul><li><a href="{p}ueber-uns/">Über uns</a></li><li><a href="{p}referenzen/">Referenzen</a></li><li><a href="{p}ratgeber/">Ratgeber</a></li><li><a href="{p}ratgeber/glossar/">Glossar</a></li></ul></div>
 <div><h4>Kontakt</h4><ul>
 <li>WOHLverde<br>Kronauer Allee 1<br>76694 Forst</li>
 <li><a href="tel:{FIRMA["tel_int"]}">{FIRMA["tel"]}</a></li>
@@ -197,7 +197,7 @@ def footer(depth):
 </div>
 <div class="foot-bottom">
 <span>© <span data-year>2026</span> WOHLverde, Forst</span>
-<nav aria-label="Rechtliches"><a href="{p}impressum/">Impressum</a><a href="{p}datenschutz/">Datenschutz</a><a href="{p}hinweis-zur-gleichstellung/">Hinweis zur Gleichstellung</a><a href="#" data-einwilligung hidden>Cookie-Einstellungen</a><a href="{FIRMA["karriere"]}" rel="noopener">Karriere</a></nav>
+<nav aria-label="Rechtliches"><a href="{p}impressum/" target="_blank">Impressum</a><a href="{p}datenschutz/" target="_blank">Datenschutz</a><a href="{p}hinweis-zur-gleichstellung/" target="_blank">Hinweis zur Gleichstellung</a><a href="#" data-einwilligung hidden>Cookie-Einstellungen</a><a href="{FIRMA["karriere"]}" rel="noopener">Karriere</a></nav>
 </div>
 </div>
 <span class="mark" aria-hidden="true">WOHLverde</span>
@@ -263,7 +263,7 @@ def form_html(depth, dark=True):
     obj = "".join(f"<option>{o}</option>" for o in ["Bürogebäude", "Gewerbe- oder Industriefläche", "Wohnanlage / Hausverwaltung", "Kommunale Einrichtung", "Hotel / Gastronomie", "Privat", "Sonstiges"])
     chips = "".join(f'<label><input type="checkbox" name="leistung[]" value="{l}"><span>{l}</span></label>' for l in ["Grünpflege", "Gebäudereinigung", "Hausmeisterservice", "Winterdienst", "Alles aus einer Hand"])
     return f'''<form class="form" id="anfrage" action="{p}anfrage-senden.php" method="post" novalidate>
-<h3 style="color:var(--petrol)">Anfrage für Ihr Objekt</h3>
+<p class="form-titel">Anfrage für Ihr Objekt</p>
 <p class="form-note" style="margin:0 0 20px">Felder mit * sind Pflicht. Dauert etwa eine Minute.</p>
 <div class="row">
 <div class="fld"><label for="f-firma">Unternehmen / Einrichtung</label><input id="f-firma" name="firma" autocomplete="organization"></div>
@@ -281,7 +281,7 @@ def form_html(depth, dark=True):
 <div class="fld req"><label for="f-msg">Ihre Nachricht *</label><textarea id="f-msg" name="nachricht" required placeholder="Größe der Fläche, gewünschter Rhythmus, Startzeitpunkt …"></textarea><span class="err">Bitte beschreiben Sie kurz Ihr Anliegen.</span></div>
 <div class="hp" aria-hidden="true"><label for="f-web">Bitte frei lassen</label><input id="f-web" name="website" tabindex="-1" autocomplete="off"></div>
 <input type="hidden" name="ts" value=""><input type="hidden" name="seite" value=""><input type="hidden" name="kampagne" value="">
-<div class="fld req" style="margin:0"><label class="consent"><input type="checkbox" name="datenschutz" value="ja" required><span>Ich bin einverstanden, dass meine Angaben zur Bearbeitung der Anfrage verwendet werden. Mehr dazu in der <a href="{p}datenschutz/">Datenschutzerklärung</a>. *</span></label><span class="err">Bitte stimmen Sie der Verarbeitung zu.</span></div>
+<div class="fld req" style="margin:0"><label class="consent"><input type="checkbox" name="datenschutz" value="ja" required><span>Ich bin einverstanden, dass meine Angaben zur Bearbeitung der Anfrage verwendet werden. Mehr dazu in der <a href="{p}datenschutz/" target="_blank">Datenschutzerklärung</a>. *</span></label><span class="err">Bitte stimmen Sie der Verarbeitung zu.</span></div>
 <button class="btn btn--petrol" type="submit" style="width:100%"><span>Anfrage senden</span>{ic("arrow")}</button>
 <div class="form-msg" role="status" aria-live="polite"></div>
 </form>'''
@@ -323,7 +323,18 @@ def feats(items, dark=False):
     return '<div class="feats">' + "".join(
         f'<div class="feat rv d{i % 2}"><div class="ic">{ic(icn)}</div><div><h3>{t}</h3><p>{x}</p></div></div>' for i, (icn, t, x) in enumerate(items)) + "</div>"
 
+def neuer_tab(html_):
+    """Externe Links (Instagram, Facebook, Google, Karriere, AO) oeffnen in neuem Tab, damit Besucher auf der Seite bleiben."""
+    import re as _re
+    def f(m):
+        tag = m.group(0)
+        if "target=" in tag: return tag
+        tag = tag.replace(' rel="noopener"', "")
+        return tag[:-1] + ' target="_blank" rel="noopener">'
+    return _re.sub(r'<a [^>]*href="https?://[^"]*"[^>]*>', f, html_)
+
 def write(path, content):
+    if path.endswith(".html"): content = neuer_tab(content)
     full = os.path.join(ROOT, path)
     os.makedirs(os.path.dirname(full), exist_ok=True)
     with open(full, "w", encoding="utf-8") as f:
@@ -334,8 +345,8 @@ def write(path, content):
 def page_home():
     """Startseite 3.0: Mischung aus erster und zweiter Fassung zum Vergleich (noindex, nicht in der Sitemap)."""
     d = 0
-    title = "Grünpflege & Gebäudereinigung in Bruchsal & Karlsruhe | WOHLverde"
-    desc = "WOHLverde aus Forst betreut Gewerbeimmobilien, Hausverwaltungen und Kommunen im Raum Bruchsal, Karlsruhe und Bretten: Grünpflege, Gebäudereinigung, Hausmeisterservice und Winterdienst. Festes Team, keine Subunternehmen."
+    title = "Grünpflege & Gebäudereinigung Bruchsal & Karlsruhe | WOHLverde"
+    desc = "Grünpflege, Gebäudereinigung, Hausmeisterservice und Winterdienst für Gewerbe, Hausverwaltungen und Kommunen im Raum Bruchsal und Karlsruhe. 5,0 Sterne bei Google."
     schema = ld(faq_schema(FAQ_START), page_url="/", page_name=title, desc=desc)
     cls = ["c-a", "c-b", "c-c", "c-d"]
     cards = "".join(f'''<a class="card {cls[i]} art rv d{i % 2}" href="{l["url"].lstrip("/")}">{art(l["art"], d)}
@@ -503,8 +514,8 @@ def page_leistung(l):
 def page_einsatz():
     d = 1
     url = "/einsatzgebiet/"
-    title = "Einsatzgebiet: Bruchsal, Karlsruhe, Bretten & Umgebung | WOHLverde"
-    desc = "WOHLverde betreut Objekte von Forst aus im Raum Bruchsal, Karlsruhe, Bretten und Umgebung: Grünpflege, Gebäudereinigung, Hausmeisterservice und Winterdienst mit kurzen Wegen."
+    title = "Einsatzgebiet Bruchsal, Karlsruhe, Bretten | WOHLverde"
+    desc = "WOHLverde betreut Objekte von Forst aus im Raum Bruchsal, Karlsruhe und Bretten: Grünpflege, Gebäudereinigung, Hausmeisterservice und Winterdienst."
     crumbs = [("Startseite", "/"), ("Einsatzgebiet", url)]
     schema = ld(crumbs_schema(crumbs), page_url=url, page_name=title, desc=desc, page_type="CollectionPage")
     places = "".join(f'<a class="place rv d{i % 4}" href="{o["slug"]}/"><b>{o["name"]}</b><span>{o["zeile"]} {ic("arrow")}</span></a>' for i, o in enumerate(ORTE))
@@ -533,8 +544,8 @@ def page_ort(o):
     d = 2
     url = f"/einsatzgebiet/{o['slug']}/"
     n = o["name"]
-    title = f"Gebäudereinigung, Grünpflege & Hausmeister in {n} | WOHLverde"
-    desc = f"Objektbetreuung in {n}: WOHLverde übernimmt Grünpflege, Gebäudereinigung, Hausmeisterservice und Winterdienst für Unternehmen, Hausverwaltungen und Kommunen. Festes Team aus Forst, keine Subunternehmen."
+    title = f"Gebäudereinigung & Grünpflege {n} | WOHLverde"
+    desc = f"Objektbetreuung in {n}: Grünpflege, Gebäudereinigung, Hausmeisterservice und Winterdienst für Gewerbe, Hausverwaltungen und Kommunen. Festes Team aus Forst."
     crumbs = [("Startseite", "/"), ("Einsatzgebiet", "/einsatzgebiet/"), (n, url)]
     faqs = [
         (f"Bietet WOHLverde Gebäudereinigung und Grünpflege in {n} an?", f"Ja. {n} gehört zu unserem Einsatzgebiet. Wir übernehmen dort Grünpflege, Gebäudereinigung, Hausmeisterservice und Winterdienst, einzeln oder als Gesamtpaket aus einer Hand."),
@@ -578,7 +589,7 @@ def page_ueber():
     d = 1
     url = "/ueber-uns/"
     title = "Über uns: das Team hinter WOHLverde aus Forst | WOHLverde"
-    desc = "WOHLverde, früher H&G WOHL, wurde 2020 von Nico Sica in Forst gegründet. Über 20 festangestellte Kolleginnen und Kollegen betreuen Objekte im Raum Bruchsal und Karlsruhe."
+    desc = "WOHLverde, früher H&G WOHL, 2020 von Nico Sica in Forst gegründet: über 20 festangestellte Profis für Objektbetreuung im Raum Bruchsal und Karlsruhe."
     crumbs = [("Startseite", "/"), ("Über uns", url)]
     schema = ld(crumbs_schema(crumbs), page_url=url, page_name=title, desc=desc, page_type="AboutPage")
     werte = "".join(f'<div class="rv d{i % 4}"><span class="n">{i + 1}</span><b>{t}</b><p>{x}</p></div>' for i, (t, x) in enumerate(WERTE))
@@ -690,7 +701,7 @@ def page_referenzen():
     d = 1
     url = "/referenzen/"
     title = "Referenzen: Kunden und Ergebnisse | WOHLverde"
-    desc = "Unternehmen und Einrichtungen, die WOHLverde vertrauen, Google-Bewertung 5,0 und Ergebnisse aus der Praxis. Grünpflege, Gebäudereinigung und Hausmeisterservice im Raum Bruchsal und Karlsruhe."
+    desc = "Unternehmen und Einrichtungen, die WOHLverde vertrauen, 5,0 Sterne bei Google und Ergebnisse aus der Praxis. Objektbetreuung im Raum Bruchsal und Karlsruhe."
     crumbs = [("Startseite", "/"), ("Referenzen", url)]
     schema = ld(crumbs_schema(crumbs), page_url=url, page_name=title, desc=desc, page_type="CollectionPage")
     kunden = "".join(f'<div class="kunde rv d{i % 4}"><span class="pin">{ic("shield")}</span><b>{k}</b></div>' for i, k in enumerate(REFERENZEN))
@@ -737,12 +748,14 @@ def page_ratgeber_index():
     desc = "Wissen rund um Gebäudereinigung, Grünpflege und Winterdienst für Unternehmen, Hausverwaltungen und Kommunen. Kurz und verständlich erklärt von WOHLverde."
     crumbs = [("Startseite", "/"), ("Ratgeber", url)]
     schema = ld(crumbs_schema(crumbs), page_url=url, page_name=title, desc=desc, page_type="CollectionPage")
-    karten = "".join(f'<a class="artikel rv d{i}" href="{a["slug"]}/"><div class="frame">{pic(a["bild"], a["bild_alt"], d, "(max-width: 900px) 100vw, 33vw")}</div><div class="artikel-txt"><h3>{a["title"]}</h3><p>{a["teaser"]}</p><span class="more">Weiterlesen {ic("arrow")}</span></div></a>' for i, a in enumerate(RATGEBER))
+    karten = "".join(f'<a class="artikel rv d{i}" href="{a["slug"]}/"><div class="frame">{pic(a["bild"], a["bild_alt"], d, "(max-width: 900px) 100vw, 33vw")}</div><div class="artikel-txt"><h2>{a["title"]}</h2><p>{a["teaser"]}</p><span class="more">Weiterlesen {ic("arrow")}</span></div></a>' for i, a in enumerate(RATGEBER))
     body = f"""
 <section class="phead" style="padding-bottom:56px"><div class="wrap">{crumbs_html(crumbs, d)}
 <span class="eyebrow" style="color:var(--lime)">Ratgeber</span><h1>Wissen für Objektverantwortliche.</h1>
 <p class="lead">Kurze Antworten auf Fragen, die uns Unternehmen, Hausverwaltungen und Kommunen oft stellen.</p></div></section>
-<section class="sec"><div class="wrap"><div class="artikel-grid">{karten}</div></div></section>
+<section class="sec"><div class="wrap">
+<a class="glossar-teaser rv" href="glossar/"><span class="pin">{ic("doc")}</span><span><small>Glossar</small><b>{len(GLOSSAR)} Fachbegriffe kurz erklärt</b>Von Bauendreinigung bis Winterdienst</span>{ic("arrow")}</a>
+<div class="artikel-grid">{karten}</div></div></section>
 {form_section(d)}
 """
     write("ratgeber/index.html", head(title, desc, url, d, schema) + header(d, "ueber") + body + footer(d))
@@ -780,7 +793,46 @@ def page_ratgeber(a):
 </div></section>
 {form_section(d)}
 """
-    write(f"ratgeber/{a['slug']}/index.html", head(a["title"] + " | WOHLverde", a["desc"], url, d, schema, og_img=a["bild"] + ".jpg") + header(d, "ueber") + body + footer(d))
+    write(f"ratgeber/{a['slug']}/index.html", head(a["seo_title"], a["desc"], url, d, schema, og_img=a["bild"] + ".jpg") + header(d, "ueber") + body + footer(d))
+
+def slugify(t):
+    import unicodedata, re as _re
+    t = t.lower().replace("ä", "ae").replace("ö", "oe").replace("ü", "ue").replace("ß", "ss")
+    return _re.sub(r"[^a-z0-9]+", "-", t).strip("-")
+
+def page_glossar():
+    d = 2
+    url = "/ratgeber/glossar/"
+    title = "Glossar Gebäudereinigung & Grünpflege | WOHLverde"
+    desc = "Fachbegriffe aus Gebäudereinigung, Grünpflege, Hausmeisterservice und Winterdienst kurz erklärt: von Bauendreinigung bis Winterdienst. Das WOHLverde-Glossar."
+    crumbs = [("Startseite", "/"), ("Ratgeber", "/ratgeber/"), ("Glossar", url)]
+    terms = sorted(GLOSSAR, key=lambda x: x[0].lower())
+    dts = {"@type": "DefinedTermSet", "@id": DOMAIN + url + "#glossar", "name": "WOHLverde Glossar", "description": desc,
+           "hasDefinedTerm": [{"@type": "DefinedTerm", "@id": DOMAIN + url + "#" + slugify(t), "name": t, "description": x, "inDefinedTermSet": DOMAIN + url + "#glossar", "url": DOMAIN + url + "#" + slugify(t)} for t, x, _ in terms]}
+    schema = ld(dts, crumbs_schema(crumbs), page_url=url, page_name=title, desc=desc, page_type="CollectionPage")
+    buchst = sorted(set(t[0][0].upper() for t in terms))
+    az = "".join(f'<a href="#b-{b}">{b}</a>' for b in buchst)
+    teile, aktuell = [], None
+    for t, x, link in terms:
+        b = t[0].upper()
+        if b != aktuell:
+            if aktuell: teile.append("</div></div>")
+            teile.append(f'<div class="g-gruppe"><h2 class="g-buchstabe" id="b-{b}">{b}</h2><div class="g-liste">')
+            aktuell = b
+        ziel = "../.." + link if link != "/" else "../../"
+        teile.append(f'<div class="g-term rv" id="{slugify(t)}"><h3>{t}</h3><p>{x}</p><a class="g-mehr" href="{ziel}">Mehr dazu {ic("arrow")}</a></div>')
+    teile.append("</div></div>")
+    body = f"""
+<section class="phead" style="padding-bottom:56px"><div class="wrap">{crumbs_html(crumbs, d)}
+<span class="eyebrow" style="color:var(--lime)">Glossar</span><h1>Fachbegriffe kurz erklärt.</h1>
+<p class="lead">{len(terms)} Begriffe aus Gebäudereinigung, Grünpflege, Hausmeisterservice und Winterdienst, verständlich und auf den Punkt.</p>
+<nav class="g-az" aria-label="Alphabet">{az}</nav></div></section>
+<section class="sec"><div class="wrap glossar">{"".join(teile)}
+<p class="stand">Stand: Oktober 2026. Die Erklärungen ersetzen keine Rechtsberatung.</p></div></section>
+{form_section(d)}
+"""
+    write("ratgeber/glossar/index.html", head(title, desc, url, d, schema) + header(d, "ueber") + body + footer(d))
+
 
 def page_danke():
     d = 1
@@ -796,7 +848,7 @@ def page_kontakt():
     d = 1
     url = "/kontakt/"
     title = "Kontakt & Angebot anfragen | WOHLverde Forst bei Bruchsal"
-    desc = "Angebot für Grünpflege, Gebäudereinigung, Hausmeisterservice oder Winterdienst anfragen: WOHLverde, Kronauer Allee 1, 76694 Forst. Telefon 07251 3924446, info@wohlverde.de."
+    desc = "Angebot anfragen bei WOHLverde, Kronauer Allee 1, 76694 Forst: Grünpflege, Gebäudereinigung, Hausmeisterservice, Winterdienst. Telefon 07251 3924446."
     crumbs = [("Startseite", "/"), ("Kontakt", url)]
     schema = ld(crumbs_schema(crumbs), page_url=url, page_name=title, desc=desc, page_type="ContactPage")
     body = f'''
@@ -841,7 +893,7 @@ def page_404():
     write("404.html", out)
 
 def extras():
-    urls = ["/"] + [l["url"] for l in LEISTUNGEN] + ["/einsatzgebiet/"] + [f"/einsatzgebiet/{o['slug']}/" for o in ORTE] + ["/ueber-uns/", "/kontakt/", "/referenzen/", "/ratgeber/"] + [dt["parent"] + dt["slug"] + "/" for dt in DETAILS] + [f"/ratgeber/{a['slug']}/" for a in RATGEBER]
+    urls = ["/"] + [l["url"] for l in LEISTUNGEN] + ["/einsatzgebiet/"] + [f"/einsatzgebiet/{o['slug']}/" for o in ORTE] + ["/ueber-uns/", "/kontakt/", "/referenzen/", "/ratgeber/"] + [dt["parent"] + dt["slug"] + "/" for dt in DETAILS] + [f"/ratgeber/{a['slug']}/" for a in RATGEBER] + ["/ratgeber/glossar/"]
     sm = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + "".join(
         f"  <url><loc>{DOMAIN}{u}</loc><lastmod>{TODAY}</lastmod></url>\n" for u in urls) + "</urlset>\n"
     write("sitemap.xml", sm)
@@ -855,6 +907,7 @@ def extras():
              "## Einsatzgebiet", "Raum Bruchsal, Karlsruhe, Bretten und Umgebung: " + ", ".join(EINSATZORTE_ALLE) + ".", ""] + [f"- [{o['name']}]({DOMAIN}/einsatzgebiet/{o['slug']}/)" for o in ORTE] + ["",
              "## Häufige Fragen"] + [f"- **{q}** {a}" for q, a in FAQ_START] + ["",
              "## Einzelleistungen"] + [f"- [{dt['name']}]({DOMAIN}{dt['parent']}{dt['slug']}/): {dt['kurz']}" for dt in DETAILS] + ["", "## Ratgeber"] + [f"- [{a['title']}]({DOMAIN}/ratgeber/{a['slug']}/): {a['kurz']}" for a in RATGEBER] + ["",
+             "## Glossar", f"Vollständig: {DOMAIN}/ratgeber/glossar/"] + [f"- **{t}:** {x}" for t, x, _ in sorted(GLOSSAR)] + ["",
              "## Weitere Seiten", f"- [Über uns]({DOMAIN}/ueber-uns/)", f"- [Referenzen]({DOMAIN}/referenzen/)", f"- [Karriere]({FIRMA['karriere']})", f"- [Instagram]({FIRMA['instagram']})", f"- [Impressum]({DOMAIN}/impressum/)", ""]
     write("llms.txt", "\n".join(lines))
     write("site.webmanifest", json.dumps({"name": "WOHLverde", "short_name": "WOHLverde", "start_url": "/", "display": "standalone", "background_color": "#003a41", "theme_color": "#003a41",
@@ -866,6 +919,7 @@ if __name__ == "__main__":
     page_referenzen()
     page_ratgeber_index()
     for a in RATGEBER: page_ratgeber(a)
+    page_glossar()
     page_danke()
     for l in LEISTUNGEN: page_leistung(l)
     page_einsatz()

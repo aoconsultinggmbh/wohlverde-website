@@ -786,3 +786,11 @@ a.feat--link{text-decoration:none;color:inherit}
 .glossar .g-gruppe .g-buchstabe{margin:0;position:sticky;top:110px;align-self:start;line-height:1}
 @media (max-width:760px){.glossar .g-gruppe{grid-template-columns:1fr;gap:14px;padding:28px 0}.glossar .g-gruppe .g-buchstabe{position:static}}
 .glossar .stand{margin-top:40px;color:var(--muted);font-size:14px}
+/* Desktop: Schriftzug als Hintergrund hinter dem Footer-Inhalt */
+@media (min-width:1101px){
+  .foot{padding-bottom:calc(40px + env(safe-area-inset-bottom))}
+  .foot>.wrap{position:relative;z-index:1}
+  .foot .mark{position:absolute;left:50%;bottom:-.04em;transform:translateX(-50%);margin:0;pointer-events:none;-webkit-text-stroke:1.5px rgba(199,215,100,.16)}
+  .foot-bottom{margin-top:clamp(64px,5vw,96px);border-top-color:rgba(255,255,255,.14)}
+  .foot{padding-bottom:calc(clamp(60px,5vw,90px) + env(safe-area-inset-bottom))}
+}

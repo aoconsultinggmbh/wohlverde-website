@@ -203,6 +203,13 @@
   }
   liveStatus(); setInterval(liveStatus, 60000);
 
+  /* Zeitstrahl: Linie fuellt sich, sobald er sichtbar ist */
+  var tls = d.querySelectorAll(".timeline");
+  if ("IntersectionObserver" in window) {
+    var tio = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add("go"); tio.unobserve(e.target); } }); }, { threshold: 0.35 });
+    tls.forEach(function (t) { tio.observe(t); });
+  } else tls.forEach(function (t) { t.classList.add("go"); });
+
   /* Jahr im Fuss */
   d.querySelectorAll("[data-year]").forEach(function (el) { el.textContent = new Date().getFullYear(); });
 })();

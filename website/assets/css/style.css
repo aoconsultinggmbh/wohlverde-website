@@ -672,3 +672,34 @@ h1,h2,h3,.display,.stat b,.step::before,.ticker span,.place b,.badge b,.nf b{fon
 .liste--dark li{border-bottom-color:rgba(255,255,255,.14)}
 .liste--dark b{-webkit-text-stroke:0;color:var(--lime)}
 .liste--dark p{color:#c9d8da}
+
+/* Ablauf als Zeitstrahl */
+.timeline{position:relative;margin-top:clamp(24px,4vw,48px)}
+.timeline ol{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(18px,3vw,40px);position:relative;z-index:1}
+.tl-line{position:absolute;left:12.5%;right:12.5%;top:44px;height:4px;border-radius:4px;background:#e1e7e1;overflow:hidden}
+.tl-fill{position:absolute;inset:0;width:0;background:linear-gradient(90deg,var(--lime),#9fbf3a);border-radius:4px;transition:width 1.8s var(--ease) .2s}
+.timeline.go .tl-fill{width:100%}
+.tl-item{text-align:center;padding:0 6px}
+.tl-dot{position:relative;display:grid;place-items:center;width:92px;height:92px;margin:0 auto 22px;border-radius:50%;background:var(--petrol);color:var(--lime);box-shadow:0 0 0 8px var(--paper),0 18px 40px -18px rgba(0,39,44,.6);transition:transform .45s var(--ease),background .3s,color .3s}
+.tl-dot svg{width:36px;height:36px}
+.tl-dot em{position:absolute;top:-4px;right:-4px;width:32px;height:32px;border-radius:50%;background:var(--lime);color:var(--petrol);font-style:normal;font-weight:700;font-size:15px;display:grid;place-items:center;box-shadow:0 0 0 4px var(--paper)}
+.tl-item:hover .tl-dot{transform:translateY(-6px) rotate(-6deg);background:var(--lime);color:var(--petrol)}
+.tl-item:hover .tl-dot em{background:var(--petrol);color:var(--lime)}
+.tl-item h3{font-size:clamp(19px,1.5vw,23px);margin-bottom:8px}
+.tl-item p{margin:0 auto;color:var(--muted);font-size:16px;max-width:30ch}
+.sand .tl-dot,.sand .tl-dot em{box-shadow:0 0 0 8px var(--sand)}
+.timeline--dark .tl-line{background:rgba(255,255,255,.14)}
+.timeline--dark .tl-dot{background:var(--lime);color:var(--petrol);box-shadow:0 0 0 8px var(--petrol)}
+.timeline--dark .tl-dot em{background:#fff;box-shadow:0 0 0 4px var(--petrol)}
+.timeline--dark .tl-item:hover .tl-dot{background:#fff}
+.timeline--dark .tl-item p{color:#c9d8da}
+@media (max-width:860px){
+  .timeline ol{grid-template-columns:1fr;gap:28px}
+  .tl-line{left:45px;right:auto;top:46px;bottom:46px;width:4px;height:auto}
+  .tl-fill{width:100%!important;height:0;transition:height 1.8s var(--ease) .2s}
+  .timeline.go .tl-fill{height:100%}
+  .tl-item{display:grid;grid-template-columns:92px 1fr;column-gap:20px;text-align:left;align-items:center;padding:0}
+  .tl-dot{margin:0;grid-row:span 2}
+  .tl-item h3{align-self:end;margin:0 0 4px}
+  .tl-item p{margin:0;max-width:none;align-self:start}
+}

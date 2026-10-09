@@ -230,8 +230,10 @@ def faq_html(faqs):
         f'<details class="rv"><summary>{esc(q)}</summary><div class="a"><p>{esc(a)}</p></div></details>' for q, a in faqs) + "</div>"
 
 def steps_html(dark=False):
-    s = "".join(f'<li class="rv d{i}"><b>0{i+1}</b><div><h3>{t}</h3><p>{x}</p></div></li>' for i, (t, x) in enumerate(ABLAUF))
-    return f'<ol class="liste{" liste--dark" if dark else ""}">{s}</ol>'
+    """Ablauf als Zeitstrahl: Linie fuellt sich beim Scrollen, je Schritt ein Icon."""
+    icons = ["chat", "users", "doc", "shield"]
+    items = "".join(f'''<li class="tl-item rv d{i}"><span class="tl-dot">{ic(icons[i])}<em>{i+1}</em></span><h3>{t}</h3><p>{x}</p></li>''' for i, (t, x) in enumerate(ABLAUF))
+    return f'<div class="timeline{" timeline--dark" if dark else ""}"><span class="tl-line"><span class="tl-fill"></span></span><ol>{items}</ol></div>'
 
 def steps_kacheln(dark=False):
     s = "".join(f'<div class="step rv d{i}"><h3>{t}</h3><p>{x}</p></div>' for i, (t, x) in enumerate(ABLAUF))
@@ -341,7 +343,6 @@ def page_home():
 <h3>{l["name"]}</h3><p>{l["teaser"]}</p><span class="more">Mehr erfahren {ic("arrow")}</span></a>''' for i, l in enumerate(LEISTUNGEN))
     who = "".join(f"<span>{t}</span>" for t, _ in ZIELGRUPPEN)
     places = "".join(f'<a class="place rv d{i % 4}" href="einsatzgebiet/{o["slug"]}/"><b>{o["name"]}</b><span>{o["zeile"]} {ic("arrow")}</span></a>' for i, o in enumerate(ORTE))
-    steps = "".join(f'<li class="rv d{i}"><b>0{i+1}</b><div><h3>{t}</h3><p>{x}</p></div></li>' for i, (t, x) in enumerate(ABLAUF))
     body = f'''
 <section class="hero">
 <span class="blob b-a"></span><span class="blob b-b"></span>
@@ -408,9 +409,9 @@ def page_home():
 {refs_html()}
 </div></section>
 
-<section class="sec"><div class="wrap ablauf2">
-<div class="rv"><span class="eyebrow">So läuft die Zusammenarbeit</span><h2>Vier Schritte. Ein fester Ansprechpartner.</h2></div>
-<ol class="liste">{steps}</ol>
+<section class="sec"><div class="wrap">
+<div class="mitte rv"><span class="eyebrow">So läuft die Zusammenarbeit</span><h2>Vier Schritte. Ein fester Ansprechpartner.</h2></div>
+{steps_html()}
 </div></section>
 
 <div class="big-ticker" aria-hidden="true"><div class="ticker-in">{"".join(f"<span>{t}</span>" for t in ["Grünpflege","Gebäudereinigung","Hausmeisterservice","Winterdienst"]*2)}</div></div>

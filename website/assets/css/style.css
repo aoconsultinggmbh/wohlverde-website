@@ -703,3 +703,10 @@ h1,h2,h3,.display,.stat b,.step::before,.ticker span,.place b,.badge b,.nf b{fon
   .tl-item h3{align-self:end;margin:0 0 4px}
   .tl-item p{margin:0;max-width:none;align-self:start}
 }
+/* Abschnittskopf zweispaltig: Ueberschrift links, Text rechts */
+.kopf2{display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,5vw,80px);align-items:end;margin-bottom:clamp(36px,5vw,64px)}
+.kopf2 h2{margin:0}
+.kopf2 .lead{margin:0 0 18px;max-width:none}
+.kopf2 .fuer{justify-content:flex-start;margin-top:0}
+.mix .kopf2 .hl{background-size:100% 100%}
+@media (max-width:900px){.kopf2{grid-template-columns:1fr;gap:18px}}

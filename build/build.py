@@ -368,9 +368,8 @@ def page_home():
 {ticker(["Grünpflege", "Gebäudereinigung", "Hausmeisterservice", "Winterdienst", "Baumpflege", "Glasreinigung", "Unterhaltsreinigung", "Objektbetreuung"])}
 
 <section class="sec" id="leistungen"><div class="wrap">
-<div class="mitte rv"><span class="eyebrow">Unsere Leistungen</span><h2>Ein Partner für Ihr <span class="hl">ganzes Objekt</span>.</h2>
-<p class="lead">WOHLverde ist ein Dienstleister für Objektbetreuung aus Forst bei Bruchsal. Wir übernehmen Grünpflege, Gebäudereinigung, Hausmeisterservice und Winterdienst für Unternehmen, Hausverwaltungen und Kommunen im Raum Bruchsal, Karlsruhe und Bretten, ausschließlich mit eigenem, festangestelltem Personal.</p>
-<div class="fuer">{who}</div></div>
+<div class="kopf2"><div class="rv"><span class="eyebrow">Unsere Leistungen</span><h2>Ein Partner für Ihr <span class="hl">ganzes Objekt</span>.</h2></div>
+<div class="rv d1"><p class="lead">WOHLverde ist ein Dienstleister für Objektbetreuung aus Forst bei Bruchsal. Wir übernehmen Grünpflege, Gebäudereinigung, Hausmeisterservice und Winterdienst für Unternehmen, Hausverwaltungen und Kommunen im Raum Bruchsal, Karlsruhe und Bretten, ausschließlich mit eigenem, festangestelltem Personal.</p><div class="fuer">{who}</div></div></div>
 <div class="bento">{cards}</div>
 </div></section>
 

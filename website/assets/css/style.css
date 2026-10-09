@@ -627,3 +627,35 @@ h1,h2,h3,.display,.stat b,.step::before,.ticker span,.place b,.badge b,.nf b{fon
   .top{transition:background .3s,box-shadow .3s}
   .nav{position:fixed;top:84px;left:0;right:0;bottom:auto;height:calc(100vh - 84px);height:calc(100dvh - 84px);-webkit-overflow-scrolling:touch}
 }
+
+/* Startseite 2.0: ruhigere Fassung */
+.ruhig .ticker{display:none}
+.ruhig .hl{background-image:none!important}
+.ruhig .vn .hl,.ruhig .hero .l{background-image:linear-gradient(transparent 62%,var(--lime) 62%,var(--lime) 92%,transparent 92%)!important}
+.ruhig .hero .l{background-image:none!important}
+.ruhig .card:hover{transform:translateY(-4px)}
+.mitte{max-width:860px;margin:0 auto clamp(36px,5vw,64px);text-align:center}
+.mitte .eyebrow{justify-content:center}
+.mitte .lead{margin:0 auto}
+.fuer{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-top:22px}
+.fuer span{padding:8px 16px;border-radius:999px;background:var(--sand);border:1px solid #e3e7df;font-weight:600;font-size:14.5px;color:var(--petrol)}
+.stats--2{grid-template-columns:repeat(2,minmax(0,1fr));margin-top:28px}
+.ablauf2{display:grid;grid-template-columns:.8fr 1.2fr;gap:clamp(32px,6vw,96px);align-items:start}
+.liste{list-style:none;margin:0;padding:0;border-top:1px solid #dfe5df}
+.liste li{display:grid;grid-template-columns:90px 1fr;gap:20px;padding:26px 0;border-bottom:1px solid #dfe5df;transition:padding .35s var(--ease)}
+.liste li:hover{padding-left:12px}
+.liste b{font-weight:700;font-size:44px;line-height:1;color:var(--lime);-webkit-text-stroke:1.5px var(--petrol)}
+.liste h3{margin:0 0 6px}
+.liste p{margin:0;color:var(--muted)}
+@media (max-width:900px){.ablauf2{grid-template-columns:1fr}.liste li{grid-template-columns:64px 1fr}.liste b{font-size:34px}}
+.streifen{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.streifen-item{display:flex;align-items:center;gap:18px;padding:24px 28px;border-radius:var(--radius);background:var(--petrol);color:#fff;text-decoration:none;transition:transform .35s var(--ease)}
+.streifen-item:hover{transform:translateY(-4px)}
+.streifen-item>svg{width:28px;height:28px;flex:none;color:var(--lime)}
+.streifen-item>svg:last-child{width:22px;margin-left:auto;transition:transform .3s}
+.streifen-item:hover>svg:last-child{transform:translateX(6px)}
+.streifen-item span{font-weight:700;font-size:clamp(17px,1.4vw,21px);line-height:1.25}
+.streifen-item small{display:block;font-weight:600;font-size:12px;letter-spacing:.12em;text-transform:uppercase;opacity:.75;margin-bottom:4px}
+.streifen-item.lime{background:var(--lime);color:var(--petrol)}
+.streifen-item.lime>svg{color:var(--petrol)}
+@media (max-width:760px){.streifen{grid-template-columns:1fr}}

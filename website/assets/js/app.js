@@ -152,7 +152,8 @@
 
   /* Werkzeuge und Schriftzug im Hintergrund der Petrol-Flaechen */
   var WZ = ["heckenschere", "scheibenabzieher", "schraubenzieher", "rechen", "spruehflasche", "laubblaeser", "schluessel", "rasenmaeher", "staubwedel"];
-  d.querySelectorAll(".hero, .phead, section.dark, .cta").forEach(function (sec, si) {
+  var RUHIG = d.body.classList.contains("ruhig");
+  d.querySelectorAll(RUHIG ? ".hero" : ".hero, .phead, section.dark, .cta").forEach(function (sec, si) {
     var deko = d.createElement("div"); deko.className = "deko"; deko.setAttribute("aria-hidden", "true");
     var n = sec.classList.contains("cta") ? 3 : 6;
     for (var i = 0; i < n; i++) {
@@ -164,7 +165,7 @@
       deko.appendChild(im);
     }
     sec.insertBefore(deko, sec.firstChild);
-    if (still || !window.matchMedia("(hover: hover)").matches) return;
+    if (still || RUHIG || !window.matchMedia("(hover: hover)").matches) return;
     var glow = d.createElement("span"); glow.className = "cursor-glow"; sec.insertBefore(glow, sec.firstChild);
     sec.addEventListener("mousemove", function (e) {
       var r = sec.getBoundingClientRect(), x = e.clientX - r.left, y = e.clientY - r.top;

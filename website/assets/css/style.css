@@ -551,3 +551,5 @@ h1,h2,h3,.display,.stat b,.step::before,.ticker span,.place b,.badge b,.nf b{fon
 .cursor-glow{position:absolute;width:520px;height:520px;border-radius:50%;background:radial-gradient(circle,rgba(199,215,100,.14),transparent 60%);pointer-events:none;z-index:-1;transform:translate(-50%,-50%);opacity:0;transition:opacity .4s}
 .hero:hover .cursor-glow,.phead:hover .cursor-glow,.dark:hover .cursor-glow{opacity:1}
 @media (hover:none){.cursor-glow{display:none}}
+.place--solid{background:var(--petrol);border-color:transparent;min-height:160px}
+.place--solid:hover{background:var(--lime);color:var(--petrol)}

@@ -437,7 +437,7 @@ def page_leistung(l):
     schema = ld(service, crumbs_schema(crumbs), faq_schema(l["faq"]), page_url=url, page_name=title, desc=desc)
     punkte = "".join(f'<div class="feat rv d{i % 2}"><div class="ic"><img src="../assets/icons/{l["icon"]}_neg.png" alt="" width="36" height="36"></div><div><h3>{t}</h3><p>{x}</p></div></div>' for i, (t, x) in enumerate(l["punkte"]))
     others = [o for o in LEISTUNGEN if o["url"] != url]
-    other = "".join(f'<a class="place rv d{i}" style="background:var(--petrol);min-height:150px" href="../{o["url"].lstrip("/")}"><b>{o["name"]}</b><span>{o["dd"]} {ic("arrow")}</span></a>' for i, o in enumerate(others))
+    other = "".join(f'<a class="place place--solid rv d{i}" href="../{o["url"].lstrip("/")}"><b>{o["name"]}</b><span>{o["dd"]} {ic("arrow")}</span></a>' for i, o in enumerate(others))
     body = f'''
 <section class="phead"><div class="wrap phead-grid">
 <div>{crumbs_html(crumbs, d)}
@@ -526,7 +526,7 @@ def page_ort(o):
     service = {"@type": "Service", "name": f"Objektbetreuung in {n}", "provider": {"@id": ORG_ID}, "areaServed": {"@type": "City", "name": n},
                "serviceType": "Grünpflege, Gebäudereinigung, Hausmeisterservice, Winterdienst"}
     schema = ld(service, crumbs_schema(crumbs), faq_schema(faqs), page_url=url, page_name=title, desc=desc)
-    cards = "".join(f'<a class="place rv d{i % 4}" style="background:var(--petrol);min-height:170px" href="../../{l["url"].lstrip("/")}"><b>{l["name"]}</b><span>in {n} {ic("arrow")}</span></a>' for i, l in enumerate(LEISTUNGEN))
+    cards = "".join(f'<a class="place place--solid rv d{i % 4}" href="../../{l["url"].lstrip("/")}"><b>{l["name"]}</b><span>in {n} {ic("arrow")}</span></a>' for i, l in enumerate(LEISTUNGEN))
     body = f'''
 <section class="phead"><div class="wrap phead-grid">
 <div>{crumbs_html(crumbs, d)}

@@ -610,3 +610,20 @@ h1,h2,h3,.display,.stat b,.step::before,.ticker span,.place b,.badge b,.nf b{fon
 }
 @media (max-width:1100px){.nav .dd-menu a{white-space:normal!important}.nav .dd-menu a>span{min-width:0}}
 @media (max-width:1100px){.nav>*{flex-shrink:0}.nav .btn{min-height:56px}}
+
+/* iOS/Safari: runde Ecken direkt an Bild und Bildebene, nicht nur am Rahmen */
+.frame picture,.card picture{border-radius:inherit}
+.frame img,.card img,.vn-pics img,.grade::before,.grade::after,.insta-grid img,.career img{border-radius:inherit}
+.vn-pics figure img{border-radius:24px}
+.hero-media .frame img{border-radius:280px 280px 36px 36px}
+.phead-media .frame img{border-radius:36px 200px 36px 36px}
+.split-media .frame img,.split-media .frame{border-radius:var(--radius)!important}
+.grade::before,.grade::after{mix-blend-mode:normal}
+.grade::before{background:rgba(13,90,99,.18);opacity:1}
+
+/* Mobiles Menue: Kopfzeile auf dem Handy ohne Unschaerfe-Filter (Safari setzt sonst das Menue falsch) */
+@media (max-width:1100px){
+  .top.scrolled{backdrop-filter:none!important;-webkit-backdrop-filter:none!important;background:rgba(0,39,44,.97)}
+  .top{transition:background .3s,box-shadow .3s}
+  .nav{position:fixed;top:84px;left:0;right:0;bottom:auto;height:calc(100vh - 84px);height:calc(100dvh - 84px);-webkit-overflow-scrolling:touch}
+}

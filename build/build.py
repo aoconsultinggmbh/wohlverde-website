@@ -31,17 +31,28 @@ ICONS = {
  "leaf": '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.5 19 2c1 2 2 4.2 2 8 0 5.5-4.8 10-10 10z"/><path d="M2 21c0-3 1.9-5.4 5.2-6"/></svg>',
  "chat": '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>',
 }
+ICONS["flake"] = '<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M24 4v40M6.7 14l34.6 20M6.7 34l34.6-20M24 4l-5 5M24 4l5 5M24 44l-5-5M24 44l5-5M6.7 14l1.8 6.8M6.7 14l6.8-1.8M41.3 34l-1.8-6.8M41.3 34l-6.8 1.8M6.7 34l6.8 1.8M6.7 34l1.8-6.8M41.3 14l-6.8-1.8M41.3 14l-1.8 6.8"/></svg>'
 def ic(n): return ICONS[n]
+
+def art(kind, depth, cls=""):
+    """Grafikflaeche fuer Leistungen ohne passendes Foto (Hausmeister, Winterdienst)."""
+    p = pre(depth)
+    if kind == "winter":
+        import random
+        random.seed(7)
+        fl = "".join(f'<span class="flake" style="left:{random.randint(2,92)}%;top:{random.randint(-10,70)}%;width:{random.randint(14,46)}px;height:{random.randint(14,46)}px;animation-duration:{random.randint(9,18)}s;animation-delay:-{random.randint(0,12)}s;opacity:{random.choice([.35,.55,.9])}">{ICONS["flake"]}</span>' for _ in range(14))
+        return f'<div class="art {cls}" aria-hidden="true">{fl}<img class="art-ic" src="{p}assets/icons/rechen_neg.png" alt="" style="opacity:.25;width:40%"></div>'
+    return f'<div class="art {cls}" aria-hidden="true"><img class="art-ic" src="{p}assets/icons/schraubenzieher_neg.png" alt=""><img class="art-ic k2" src="{p}assets/icons/schluessel_neg.png" alt=""></div>'
 
 def pre(depth):  # relativer Pfad zur Wurzel
     return "../" * depth
 
-def pic(name, alt, depth, sizes="(max-width: 900px) 100vw, 50vw", eager=False, cls="", w=1200, h=1800):
+def pic(name, alt, depth, sizes="(max-width: 900px) 100vw, 50vw", eager=False, cls="", w=1200, h=1800, pos=""):
     p = pre(depth) + "assets/img/"
     load = 'fetchpriority="high" loading="eager"' if eager else 'loading="lazy"'
     return (f'<picture{(" class=" + chr(34) + cls + chr(34)) if cls else ""}>'
             f'<source type="image/webp" srcset="{p}{name}-900.webp 900w, {p}{name}.webp {w}w" sizes="{sizes}">'
-            f'<img src="{p}{name}-900.jpg" srcset="{p}{name}-900.jpg 900w, {p}{name}.jpg {w}w" sizes="{sizes}" alt="{esc(alt)}" width="{w}" height="{h}" {load} decoding="async"></picture>')
+            f'<img src="{p}{name}-900.jpg" srcset="{p}{name}-900.jpg 900w, {p}{name}.jpg {w}w" sizes="{sizes}" alt="{esc(alt)}" width="{w}" height="{h}" {load} decoding="async"{(' style="object-position:' + pos + '"') if pos else ""}></picture>')
 
 def btn(href, text, kind="", icon="arrow"):
     k = f" btn--{kind}" if kind else ""
@@ -260,7 +271,7 @@ def contact_list():
 </ul>'''
 
 def insta_html(depth):
-    imgs = [("reinigung-duo", "Zwei WOHLverde-Reinigungskräfte im Treppenhaus"), ("garten-hecke-sommer", "Heckenschnitt im Sommer"), ("objekt-kontrolle", "Objektkontrolle mit Tablet"),
+    imgs = [("reinigung-duo", "Zwei WOHLverde-Reinigungskräfte im Treppenhaus"), ("garten-hecke-sommer", "Heckenschnitt im Sommer"), ("reinigung-tisch", "Reinigung eines Besprechungstischs"),
             ("juni-portrait-hut", "WOHLverde-Mitarbeiter im Einsatz"), ("reinigung-fenster", "Glasreinigung im Büro"), ("fahrzeug-transporter", "WOHLverde-Transporter")]
     g = "".join(f'<a href="{FIRMA["instagram"]}" rel="noopener" aria-label="Instagram: {esc(a)}">{pic(n, a, depth, "(max-width: 860px) 33vw, 16vw")}</a>' for n, a in imgs)
     return f'''<section class="sec sand"><div class="wrap social">
@@ -290,7 +301,8 @@ def page_home():
     cards = []
     cls = ["c-a", "c-b", "c-c", "c-d"]
     for i, l in enumerate(LEISTUNGEN):
-        cards.append(f'''<a class="card {cls[i]} rv d{i % 2}" href="{l["url"].lstrip("/")}">{pic(l["bild"], l["bild_alt"], d, "(max-width: 900px) 100vw, 60vw")}
+        media = art(l["art"], d) if l.get("art") else pic(l.get("karte", l["bild"]), l["bild_alt"], d, "(max-width: 900px) 100vw, 60vw", pos=l.get("karte_pos", ""))
+        cards.append(f'''<a class="card {cls[i]}{" art" if l.get("art") else ""} rv d{i % 2}" href="{l["url"].lstrip("/")}">{media}
 <span class="ic"><img src="assets/icons/{l["icon"]}_neg.png" alt="" width="38" height="38"></span>
 <h3>{l["name"]}</h3><p>{l["teaser"]}</p><span class="more">Mehr erfahren {ic("arrow")}</span></a>''')
     who = "".join(f'<div class="rv d{i % 4}"><span class="n">{i + 1}</span><b>{t}</b><p>{x}</p></div>' for i, (t, x) in enumerate(ZIELGRUPPEN))
@@ -298,19 +310,21 @@ def page_home():
     towns = "".join(f"<span>{t}</span>" for t in EINSATZORTE_ALLE)
     body = f'''
 <section class="hero">
+<span class="blob b-a"></span><span class="blob b-b"></span>
 <div class="wrap hero-grid">
 <div>
 <span class="eyebrow" style="color:var(--lime)">Grünpflege &amp; Gebäudereinigung im Raum Bruchsal &amp; Karlsruhe</span>
-<h1>Wir pflegen, was <span class="l">Werte</span> schafft. Drinnen wie draußen.</h1>
-<p class="lead">Professionelle Objektbetreuung für Gewerbeimmobilien, Bürogebäude, Industrieflächen, Wohnanlagen und kommunale Einrichtungen. Mit festen Teams, festen Ansprechpartnern und dokumentierten Abläufen.</p>
+<h1 class="wordsplit">Wir pflegen, was <span class="l">Werte</span> schafft.</h1>
+<p class="h1-sub">Drinnen wie draußen.</p>
+<p class="lead">Objektbetreuung für Gewerbeimmobilien, Industrieflächen, Wohnanlagen und Kommunen. Mit festen Teams, festen Ansprechpartnern und dokumentierten Abläufen.</p>
 <div class="btns">{btn("kontakt/#anfrage-form", "Angebot anfragen")}<a class="btn btn--ghost" href="#leistungen"><span>Leistungen entdecken</span></a></div>
-<p style="margin-top:26px"><a class="hero-call" href="tel:{FIRMA["tel_int"]}"><i>{ic("phone")}</i><span><small>Direkt sprechen, Mo bis Fr 8 bis 17 Uhr</small>{FIRMA["tel"]}</span></a></p>
+<p style="margin:24px 0 0"><a class="hero-call" href="tel:{FIRMA["tel_int"]}"><i>{ic("phone")}</i><span><small>Direkt sprechen, Mo bis Fr 8 bis 17 Uhr</small>{FIRMA["tel"]}</span></a></p>
 </div>
 <div class="hero-media">
-{pic("garten-heckenschere", "Lächelnder WOHLverde-Mitarbeiter mit Heckenschere auf einer Gewerbefläche", d, "(max-width: 960px) 100vw, 45vw", eager=True)}
-<div class="badge b1"><img src="assets/icons/heckenschere_pos.png" alt="" width="40" height="40"><span><b>20+</b>Profis im Team</span></div>
+<div class="frame grade">{pic("garten-heckenschere", "Lächelnder WOHLverde-Mitarbeiter mit Heckenschere auf einer Gewerbefläche", d, "(max-width: 960px) 100vw, 40vw", eager=True)}</div>
+<div class="badge b1"><img src="assets/icons/heckenschere_pos.png" alt="" width="36" height="36"><span><b>20+</b>Profis im Team</span></div>
 <div class="badge b2"><span><b>0</b>Subunternehmen</span></div>
-<div class="badge b3"><img src="assets/icons/scheibenabzieher_pos.png" alt="" width="40" height="40"><span>Alles aus<br>einer Hand</span></div>
+<div class="badge b3"><img src="assets/icons/scheibenabzieher_pos.png" alt="" width="36" height="36"><span>Alles aus<br>einer Hand</span></div>
 </div>
 </div>
 <div class="wrap hero-strip"><ul>
@@ -339,19 +353,21 @@ def page_home():
 </div></section>
 
 <section class="sec"><div class="wrap split">
-<div class="split-media rv">{pic("objekt-kontrolle", "WOHLverde-Objektleiter dokumentiert eine Objektkontrolle auf dem Tablet", d)}<span class="tag">Dokumentiert statt versprochen</span></div>
+<div class="split-media rv"><div class="frame grade para reveal-img">{pic("objekt-abstimmung", "Zwei WOHLverde-Mitarbeitende dokumentieren eine Objektkontrolle auf dem Tablet", d)}</div><span class="tag">Dokumentiert statt versprochen</span></div>
 <div class="rv d1"><span class="eyebrow">Objektservice für Gewerbe</span><h2>Wir sehen hin, bevor es teuer wird.</h2>
 <p class="lead">Regelmäßige Objektkontrollen mit Dokumentation, laufende Instandhaltung und schnelle Reaktion: So bleibt Ihre Immobilie funktional, sicher und im Wert erhalten.</p>
 <ul class="checks cols"><li>Feste Teams und Ansprechpartner</li><li>Schnelle Reaktionszeiten</li><li>Objektkontrollen mit Protokoll</li><li>Kleinreparaturen und Instandhaltung</li><li>Koordination externer Dienstleister</li><li>Unterstützung im laufenden Betrieb</li></ul>
 {btn("hausmeister-service/", "Zum Hausmeisterservice", "petrol")}</div>
 </div></section>
 
-<section class="sec--tight sand"><div class="wrap">
-<div class="head"><div><span class="eyebrow">Vorher und nachher</span><h2>Ergebnisse, die man <span class="hl">sieht</span>.</h2></div>
-<p class="lead rv">Unkrautbeseitigung auf einer gepflasterten Fläche eines Firmengeländes. Gleiche Stelle, ein Arbeitseinsatz.</p></div>
-<div class="split" style="gap:18px">
-<figure class="ba rv" style="margin:0;aspect-ratio:3/4">{pic("vorher-pflaster", "Pflasterfläche auf einem Firmengelände mit Unkraut in den Fugen, vor dem Einsatz", d, "(max-width: 900px) 100vw, 50vw", w=1050, h=1400)}<span class="lbl l1">Vorher</span></figure>
-<figure class="ba rv d1" style="margin:0;aspect-ratio:3/4">{pic("nachher-pflaster", "Dieselbe Pflasterfläche nach der Unkrautbeseitigung durch WOHLverde", d, "(max-width: 900px) 100vw, 50vw", w=1050, h=1400)}<span class="lbl l2">Nachher</span></figure>
+<section class="sec sand"><div class="wrap vn">
+<div class="rv"><span class="eyebrow">Vorher und nachher</span><h2>Ergebnisse, die man <span class="hl">sieht</span>.</h2>
+<p class="lead">Unkrautbeseitigung auf der Pflasterfläche eines Firmengeländes. Gleiche Stelle, ein Arbeitseinsatz.</p>
+<ul class="checks"><li>Grün- und Grauflächen</li><li>Umweltschonende Methoden</li><li>Fester Pflegeplan statt Einzelaktion</li></ul>
+{btn("garten-und-landschaftspflege/", "Zur Grünpflege", "petrol")}</div>
+<div class="vn-pics">
+<figure class="rv">{pic("vorher-pflaster", "Pflasterfläche auf einem Firmengelände mit Unkraut in den Fugen, vor dem Einsatz", d, "(max-width: 900px) 50vw, 25vw", w=1050, h=1400)}<span class="lbl l1">Vorher</span></figure>
+<figure class="rv d2">{pic("nachher-pflaster", "Dieselbe Pflasterfläche nach der Unkrautbeseitigung durch WOHLverde", d, "(max-width: 900px) 50vw, 25vw", w=1050, h=1400)}<span class="lbl l2">Nachher</span></figure>
 </div>
 </div></section>
 
@@ -373,7 +389,7 @@ def page_home():
 </div></section>
 
 <section class="sec"><div class="wrap split rev">
-<div class="split-media wide rv">{pic("team-unterwegs", "Das WOHLverde-Team läuft mit Werkzeug über ein Firmengelände", d, "(max-width: 900px) 100vw, 50vw", w=1800, h=1200)}</div>
+<div class="split-media wide"><div class="frame grade para reveal-img" style="border-radius:var(--radius)">{pic("team-unterwegs", "Das WOHLverde-Team läuft mit Werkzeug über ein Firmengelände", d, "(max-width: 900px) 100vw, 50vw", w=1800, h=1200)}</div></div>
 <div class="rv d1"><span class="eyebrow">Ein Team, kein Wechselpersonal</span><h2>Bei uns kennen Sie die Menschen, die bei Ihnen arbeiten.</h2>
 <p class="lead">Wir arbeiten ausschließlich mit festangestellten, deutschsprachigen Mitarbeitenden. Regelmäßige Schulungen sichern den Standard, klare Kommunikation sorgt dafür, dass nichts verloren geht.</p>
 {btn("ueber-uns/", "Lernen Sie uns kennen", "petrol")}</div>
@@ -386,6 +402,7 @@ def page_home():
 <div class="towns rv">{towns}</div>
 </div></section>
 
+<div class="big-ticker" aria-hidden="true"><div class="ticker-in">{"".join(f"<span>{t}</span>" for t in ["Grünpflege","Gebäudereinigung","Hausmeisterservice","Winterdienst"]*2)}</div></div>
 <section class="sec sand"><div class="wrap faq-grid">
 <div class="rv"><span class="eyebrow">Häufige Fragen</span><h2>Kurz und klar beantwortet.</h2><p class="lead">Ihre Frage ist nicht dabei? Rufen Sie uns an oder schreiben Sie uns, wir antworten gern persönlich.</p>{btn("kontakt/", "Kontakt aufnehmen", "petrol")}</div>
 {faq_html(FAQ_START)}
@@ -419,7 +436,7 @@ def page_leistung(l):
 <p class="lead">{l["intro"]}</p>
 <div class="btns">{btn("../kontakt/#anfrage-form", "Angebot anfragen")}<a class="btn btn--ghost" href="tel:{FIRMA["tel_int"]}"><span>{FIRMA["tel"]}</span>{ic("phone")}</a></div>
 </div>
-<div class="phead-media">{pic(l["bild"], l["bild_alt"], d, "(max-width: 860px) 100vw, 40vw", eager=True)}</div>
+<div class="phead-media">{art(l["kopf_art"], d, "frame") if l.get("kopf_art") else '<div class="frame grade">' + pic(l["bild"], l["bild_alt"], d, "(max-width: 860px) 100vw, 45vw", eager=True) + '</div>'}<span class="chip">{l["chip"]}</span></div>
 </div></section>
 {ticker([t for t, _ in l["punkte"]], dark=False)}
 
@@ -430,7 +447,7 @@ def page_leistung(l):
 </div></section>
 
 <section class="sec sand"><div class="wrap split">
-<div class="split-media rv">{pic(l["bild2"], l["bild2_alt"], d)}<span class="tag">{l["tag"]}</span></div>
+<div class="split-media"><div class="frame grade para reveal-img" style="border-radius:var(--radius)">{pic(l["bild2"], l["bild2_alt"], d)}</div><span class="tag">{l["tag"]}</span></div>
 <div class="rv d1"><span class="eyebrow">Ihr Vorteil</span><h2>{l["h2_vorteil"]}</h2><p class="lead">{l["vorteil_text"]}</p>
 <ul class="checks">{"".join(f"<li>{c}</li>" for c in l["checks"])}</ul>
 {btn("../kontakt/#anfrage-form", "Jetzt unverbindlich anfragen", "petrol")}</div>
@@ -504,11 +521,11 @@ def page_ort(o):
 <section class="phead"><div class="wrap phead-grid">
 <div>{crumbs_html(crumbs, d)}
 <span class="eyebrow" style="color:var(--lime)">Objektbetreuung in {n}</span>
-<h1>Grünpflege, Gebäudereinigung &amp; Hausmeisterservice in {n}</h1>
+<h1>Gebäudereinigung &amp; Grünpflege in {n}</h1>
 <p class="lead">{o["intro"]}</p>
 <div class="btns">{btn("../../kontakt/#anfrage-form", "Angebot anfragen")}<a class="btn btn--ghost" href="tel:{FIRMA["tel_int"]}"><span>{FIRMA["tel"]}</span>{ic("phone")}</a></div>
 </div>
-<div class="phead-media">{pic(o["bild"], o["bild_alt"], d, "(max-width: 860px) 100vw, 40vw", eager=True)}</div>
+<div class="phead-media"><div class="frame grade">{pic(o["bild"], o["bild_alt"], d, "(max-width: 860px) 100vw, 45vw", eager=True)}</div><span class="chip">{o["zeile"]}</span></div>
 </div></section>
 <section class="sec"><div class="wrap">
 <p class="kurz rv"><strong>Kurz gesagt:</strong> WOHLverde betreut Objekte in {n} mit eigenem, festangestelltem Team. Grünpflege, Gebäudereinigung, Hausmeisterservice und Winterdienst kommen aus einer Hand, mit festen Ansprechpartnern und dokumentierten Abläufen. {o["kurz_extra"]}</p>
@@ -542,7 +559,7 @@ def page_ueber():
 <h1>Jung, erfahren und mit <span style="color:var(--lime)">Herzblut</span> dabei.</h1>
 <p class="lead">Wir sind das Team aus Forst, das sich mit Leidenschaft um Objekte in der Region kümmert. Gegründet mit einer klaren Mission: den Wert von Immobilien durch kompetente Betreuung zu steigern.</p>
 </div>
-<div class="phead-media">{pic("marke-schild", "WOHLverde-Firmenschild am Standort", d, "(max-width: 860px) 100vw, 40vw", eager=True)}</div>
+<div class="phead-media"><div class="frame grade">{pic("marke-schild", "WOHLverde-Firmenschild am Standort", d, "(max-width: 860px) 100vw, 45vw", eager=True)}</div><span class="chip">Seit 2020 in Forst</span></div>
 </div></section>
 {ticker(["Ehrlichkeit", "Verantwortungsbewusstsein", "Wachstum", "Persönlichkeit", "Gründlichkeit", "Qualität", "Leidenschaft"])}
 <section class="sec"><div class="wrap split">
@@ -571,7 +588,7 @@ def page_ueber():
 <div class="head"><div><span class="eyebrow">Das Team</span><h2>Die Menschen hinter <span class="hl">WOHLverde</span>.</h2></div><p class="lead rv">Draußen auf den Flächen, drinnen in den Gebäuden und im Büro in Forst: Bei uns arbeiten Profis, die Verantwortung übernehmen.</p></div>
 <div class="insta-grid" style="grid-template-columns:repeat(4,1fr)">
 {pic("reinigung-treppenhaus", "WOHLverde-Reinigungskraft im Treppenhaus", d, "25vw")}
-{pic("hausmeister-portrait", "WOHLverde-Mitarbeiter in der Werkstatt", d, "25vw")}
+{pic("juni-portrait-hut", "WOHLverde-Mitarbeiter im Sommer", d, "25vw")}
 {pic("garten-pflanzen", "WOHLverde-Mitarbeiterin beim Pflanzen", d, "25vw")}
 {pic("team-azubi", "Junger WOHLverde-Mitarbeiter im Büro", d, "25vw")}
 </div></div></section>

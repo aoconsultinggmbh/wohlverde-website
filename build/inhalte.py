@@ -10,6 +10,9 @@ FIRMA = {
     "instagram": "https://www.instagram.com/wohlverde/",
     "facebook": "https://www.facebook.com/hausundgartenwohl",
     "karriere": "https://wohlverde-karriere.de/",
+    "google": "https://maps.google.com/?cid=3407328301533018773",
+    "sterne": "5,0",
+    "rezensionen": "über 60",   # Stand 09.10.2026: 61 Rezensionen. Bei Bedarf anpassen.
     "kurz": "WOHLverde aus Forst bei Bruchsal betreut Gewerbeimmobilien, Bürogebäude, Industrieflächen, Wohnanlagen und kommunale Einrichtungen: Grünpflege, Gebäudereinigung, Hausmeisterservice und Winterdienst aus einer Hand, mit festangestelltem Team und ohne Subunternehmen.",
 }
 
@@ -79,6 +82,7 @@ FAQ_START = [
     ("Arbeitet WOHLverde mit Subunternehmen?", "Nein. Wir arbeiten ausschließlich mit eigenen, festangestellten und deutschsprachigen Mitarbeitenden. So behalten wir die volle Kontrolle über die Qualität."),
     ("Für wen arbeitet WOHLverde?", "Unser Schwerpunkt sind Unternehmen, Gewerbeimmobilien, Industrieflächen, Hausverwaltungen und kommunale Einrichtungen. Auf Anfrage betreuen wir auch Privatkunden."),
     ("Was kostet die Objektbetreuung bei WOHLverde?", "Das hängt von Größe, Art und gewünschtem Rhythmus ab. Nach einem kostenlosen Vor-Ort-Termin erhalten Sie ein transparent kalkuliertes Angebot mit klar definierten Leistungen."),
+    ("Wie wird WOHLverde von Kunden bewertet?", "Bei Google hat WOHLverde 5,0 von 5 Sternen bei über 60 Rezensionen (Stand Oktober 2026)."),
     ("Ist WOHLverde dasselbe Unternehmen wie H&G WOHL?", "Ja. H&G WOHL heißt jetzt WOHLverde. Team, Service und Qualitätsanspruch bleiben gleich."),
 ]
 
@@ -91,7 +95,7 @@ LEISTUNGEN = [
         "intro": "Strukturierte Pflege von Außenanlagen, Industrieflächen und Bürostandorten. Saisonal geplant, sauber ausgeführt und dokumentiert, im Raum Bruchsal, Karlsruhe und Bretten.",
         "teaser": "Strukturierte Pflege von Außenanlagen, Industrieflächen und Bürostandorten, von der Rasenpflege bis zum Baumschnitt.",
         "kurz": "WOHLverde übernimmt die Garten- und Landschaftspflege für Gewerbeimmobilien, Industrieflächen, Wohnanlagen und kommunale Einrichtungen im Raum Bruchsal und Karlsruhe: Rasenpflege, Hecken- und Gehölzschnitt, Baumpflege, Unkrautbeseitigung auf Grün- und Grauflächen sowie saisonale Pflege.",
-        "karte": "garten-hecke-sommer", "karte_pos": "50% 8%", "chip": "Jahrespflege nach Plan",
+        "art": "garten", "karte": "garten-hecke-sommer", "chip": "Jahrespflege nach Plan",
         "bild": "garten-pflanzen", "bild_alt": "WOHLverde-Mitarbeiterin bei Pflanzarbeiten auf einer Grünfläche",
         "bild2": "garten-graeser", "bild2_alt": "WOHLverde-Mitarbeiter beim Rückschnitt von Ziergräsern auf einem Firmengelände", "tag": "Saisonal geplant",
         "h2_leistung": "Vom Rasen bis zur <span class=\"hl\">Baumkrone</span>.",
@@ -122,7 +126,7 @@ LEISTUNGEN = [
         "intro": "Planbare Unterhaltsreinigung für Bürogebäude, Industrieobjekte, Wohnanlagen und kommunale Einrichtungen. Mit festen Teams, klaren Zuständigkeiten und dokumentierten Abläufen.",
         "teaser": "Planbare Unterhaltsreinigung für Büros, Industrieobjekte und Wohnanlagen, mit festen Teams und klaren Zuständigkeiten.",
         "kurz": "WOHLverde übernimmt die Gebäudereinigung für Bürogebäude, Industrieobjekte, Wohnanlagen und kommunale Einrichtungen im Raum Bruchsal und Karlsruhe: Unterhalts- und Büroreinigung, Treppenhausreinigung, Glas- und Fensterreinigung, Grund- und Teppichreinigung. Immer mit eigenem, geschultem Personal.",
-        "karte": "reinigung-tisch", "karte_pos": "50% 58%", "chip": "Feste Reinigungsteams",
+        "art": "reinigung", "karte": "reinigung-tisch", "chip": "Feste Reinigungsteams",
         "bild": "reinigung-fenster-ruecken", "bild_alt": "WOHLverde-Mitarbeiter bei der Fensterreinigung in einem Büro",
         "bild2": "reinigung-buero-wisch", "bild2_alt": "WOHLverde-Mitarbeiterin wischt den Boden in einem Büro", "tag": "Feste Teams",
         "h2_leistung": "Drinnen <span class=\"hl\">glänzt</span> es.",

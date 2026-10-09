@@ -174,6 +174,16 @@
     });
   });
 
+  /* Schriftzug im Footer genau auf die Breite einpassen */
+  var mark = d.querySelector(".foot .mark");
+  function passen() {
+    if (!mark) return;
+    mark.style.fontSize = "100px";
+    var ziel = mark.parentElement.clientWidth * 0.94, ist = mark.scrollWidth;
+    if (ist) mark.style.fontSize = Math.floor(100 * ziel / ist) + "px";
+  }
+  if (mark) { passen(); window.addEventListener("resize", passen); if (d.fonts && d.fonts.ready) d.fonts.ready.then(passen); }
+
   /* Jahr im Fuss */
   d.querySelectorAll("[data-year]").forEach(function (el) { el.textContent = new Date().getFullYear(); });
 })();

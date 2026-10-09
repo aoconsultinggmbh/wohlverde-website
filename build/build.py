@@ -32,18 +32,29 @@ ICONS = {
  "leaf": '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.5 19 2c1 2 2 4.2 2 8 0 5.5-4.8 10-10 10z"/><path d="M2 21c0-3 1.9-5.4 5.2-6"/></svg>',
  "chat": '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>',
 }
+ICONS["star"] = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3 6.1 20.6l1.3-6.6L2.5 9.4l6.6-.8z"/></svg>'
 ICONS["flake"] = '<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M24 4v40M6.7 14l34.6 20M6.7 34l34.6-20M24 4l-5 5M24 4l5 5M24 44l-5-5M24 44l5-5M6.7 14l1.8 6.8M6.7 14l6.8-1.8M41.3 34l-1.8-6.8M41.3 34l-6.8 1.8M6.7 34l6.8 1.8M6.7 34l1.8-6.8M41.3 14l-6.8-1.8M41.3 14l-1.8 6.8"/></svg>'
 def ic(n): return ICONS[n]
 
 def art(kind, depth, cls=""):
-    """Grafikflaeche fuer Leistungen ohne passendes Foto (Hausmeister, Winterdienst)."""
+    """Grafikflaeche mit Markenicons statt Foto. kind: garten, reinigung, werkzeug, winter."""
+    import random
     p = pre(depth)
+    random.seed(len(kind) * 7)
+    teile = ""
     if kind == "winter":
-        import random
-        random.seed(7)
-        fl = "".join(f'<span class="flake" style="left:{random.randint(2,92)}%;top:{random.randint(-10,70)}%;width:{random.randint(14,46)}px;height:{random.randint(14,46)}px;animation-duration:{random.randint(9,18)}s;animation-delay:-{random.randint(0,12)}s;opacity:{random.choice([.35,.55,.9])}">{ICONS["flake"]}</span>' for _ in range(14))
-        return f'<div class="art {cls}" aria-hidden="true">{fl}<img class="art-ic" src="{p}assets/icons/rechen_neg.png" alt="" style="opacity:.25;width:40%"></div>'
-    return f'<div class="art {cls}" aria-hidden="true"><img class="art-ic" src="{p}assets/icons/schraubenzieher_neg.png" alt=""><img class="art-ic k2" src="{p}assets/icons/schluessel_neg.png" alt=""></div>'
+        teile = "".join(f'<span class="flake" style="left:{random.randint(2,92)}%;top:{random.randint(-10,70)}%;width:{random.randint(14,46)}px;height:{random.randint(14,46)}px;animation-duration:{random.randint(9,18)}s;animation-delay:-{random.randint(0,12)}s;opacity:{random.choice([.35,.55,.9])}">{ICONS["flake"]}</span>' for _ in range(14))
+        haupt, neben = "rechen", None
+    elif kind == "garten":
+        teile = "".join(f'<span class="leaf" style="left:{random.randint(2,92)}%;top:{random.randint(-10,60)}%;width:{random.randint(16,34)}px;height:{random.randint(16,34)}px;animation-duration:{random.randint(10,20)}s;animation-delay:-{random.randint(0,14)}s;opacity:{random.choice([.3,.5,.8])}">{ICONS["leaf"]}</span>' for _ in range(10))
+        haupt, neben = "heckenschere", "rasenmaeher"
+    elif kind == "reinigung":
+        teile = "".join(f'<span class="bubble" style="left:{random.randint(4,90)}%;width:{(z:=random.randint(12,44))}px;height:{z}px;animation-duration:{random.randint(8,16)}s;animation-delay:-{random.randint(0,14)}s"></span>' for _ in range(12))
+        haupt, neben = "scheibenabzieher", "spruehflasche"
+    else:
+        haupt, neben = "schraubenzieher", "schluessel"
+    k2 = f'<img class="art-ic k2" src="{p}assets/icons/{neben}_neg.png" alt="">' if neben else ""
+    return f'<div class="art {cls}" aria-hidden="true">{teile}<img class="art-ic" src="{p}assets/icons/{haupt}_neg.png" alt="">{k2}</div>'
 
 FOCUS = {'fahrzeug-transporter': (50, 45), 'garten-graeser': (50, 22), 'garten-hecke-sommer': (60, 13), 'garten-heckenschere': (45, 15), 'garten-maeher': (52, 17), 'garten-pflanzen': (48, 15), 'hausmeister-kehren': (45, 38), 'hausmeister-portrait': (50, 20), 'hausmeister-runde': (45, 22), 'hausmeister-fenster': (55, 30), 'juni-portrait-hut': (52, 22), 'marke-schild': (52, 30), 'nachher-pflaster': (50, 50), 'vorher-pflaster': (50, 50), 'objekt-abstimmung': (50, 19), 'reinigung-buero': (55, 12), 'reinigung-buero-wisch': (35, 12), 'reinigung-duo': (55, 15), 'reinigung-fenster': (52, 27), 'reinigung-fenster-ruecken': (50, 40), 'reinigung-tisch': (50, 22), 'reinigung-treppe-ruecken': (45, 30), 'reinigung-treppenhaus': (40, 30), 'team-azubi': (50, 20), 'team-baum': (50, 45), 'team-fahrzeug': (50, 45), 'team-gruppe': (50, 35), 'team-unterwegs': (50, 50)}  # Gesichtsposition in Prozent (x, y), damit kein Kopf abgeschnitten wird
 
@@ -86,7 +97,9 @@ def org_schema():
       "knowsAbout": ["Grünpflege", "Garten- und Landschaftspflege", "Gebäudereinigung", "Unterhaltsreinigung", "Glasreinigung", "Hausmeisterservice", "Objektbetreuung", "Winterdienst", "Baumpflege"],
       "hasOfferCatalog": {"@type": "OfferCatalog", "name": "Leistungen", "itemListElement": [
           {"@type": "Offer", "itemOffered": {"@type": "Service", "name": l["name"], "url": DOMAIN + l["url"]}} for l in LEISTUNGEN]},
-      "sameAs": [FIRMA["instagram"], FIRMA["facebook"], FIRMA["karriere"]],
+      "sameAs": [FIRMA["instagram"], FIRMA["facebook"], FIRMA["karriere"], FIRMA["google"]],
+      "hasMap": FIRMA["google"],
+      "geo": {"@type": "GeoCoordinates", "latitude": 49.1544712, "longitude": 8.5799538},
       "priceRange": "Angebot nach Vor-Ort-Termin",
     }
 
@@ -164,7 +177,7 @@ def footer(depth):
     lst = "".join(f'<li><a href="{p}{l["url"].lstrip("/")}">{l["name"]}</a></li>' for l in LEISTUNGEN)
     orte = "".join(f'<li><a href="{p}einsatzgebiet/{o["slug"]}/">{o["name"]}</a></li>' for o in ORTE)
     return f'''</main>
-<footer class="foot"><span class="mark" aria-hidden="true">WOHLverde</span>
+<footer class="foot">
 <div class="wrap">
 <div class="foot-grid">
 <div>
@@ -187,6 +200,7 @@ def footer(depth):
 <nav aria-label="Rechtliches"><a href="{p}impressum/">Impressum</a><a href="{p}datenschutz/">Datenschutz</a><a href="{p}hinweis-zur-gleichstellung/">Hinweis zur Gleichstellung</a><a href="#" data-einwilligung hidden>Cookie-Einstellungen</a><a href="{FIRMA["karriere"]}" rel="noopener">Karriere</a></nav>
 </div>
 </div>
+<span class="mark" aria-hidden="true">WOHLverde</span>
 </footer>
 <div class="mbar" aria-label="Schnellkontakt"><a class="m1" href="tel:{FIRMA["tel_int"]}">{ic("phone")}Anrufen</a><a class="m2" href="{p}kontakt/#anfrage-form">Angebot anfragen</a></div>
 <script src="{p}assets/js/ao-konfiguration.js?v={VER}"></script>
@@ -268,9 +282,13 @@ def form_html(depth, dark=True):
 
 def form_section(depth, title="Lassen Sie uns über Ihr Objekt sprechen.", text="Schreiben Sie uns kurz, worum es geht. Wir melden uns in der Regel innerhalb eines Werktags und vereinbaren einen unverbindlichen Vor-Ort-Termin."):
     return f'''<section class="sec dark" id="anfrage-form"><div class="wrap form-wrap">
-<div class="rv"><span class="eyebrow">Angebot anfragen</span><h2>{title}</h2><p class="lead">{text}</p>{contact_list()}</div>
+<div class="rv"><span class="eyebrow">Angebot anfragen</span><h2>{title}</h2><p class="lead">{text}</p>{rating("on-dark")}{contact_list()}</div>
 <div class="rv d1">{form_html(depth)}</div>
 </div></section>'''
+
+def rating(cls=""):
+    st = ic("star") * 5
+    return f'<a class="rating {cls}" href="{FIRMA["google"]}" rel="noopener" aria-label="{FIRMA["sterne"]} von 5 Sternen bei {FIRMA["rezensionen"]} Google-Rezensionen ansehen"><span class="stars">{st}</span><b>{FIRMA["sterne"]}</b><span>{FIRMA["rezensionen"]} Google-Rezensionen</span></a>'
 
 def contact_list():
     return f'''<ul class="contact-list">
@@ -328,7 +346,7 @@ def page_home():
 <p class="h1-sub">Drinnen wie draußen.</p>
 <p class="lead">Objektbetreuung für Gewerbeimmobilien, Industrieflächen, Wohnanlagen und Kommunen. Mit festen Teams, festen Ansprechpartnern und dokumentierten Abläufen.</p>
 <div class="btns">{btn("kontakt/#anfrage-form", "Angebot anfragen")}<a class="btn btn--ghost" href="#leistungen"><span>Leistungen entdecken</span></a></div>
-<p style="margin:24px 0 0"><a class="hero-call" href="tel:{FIRMA["tel_int"]}"><i>{ic("phone")}</i><span><small>Direkt sprechen, Mo bis Fr 8 bis 17 Uhr</small>{FIRMA["tel"]}</span></a></p>
+<div class="hero-meta"><a class="hero-call" href="tel:{FIRMA["tel_int"]}"><i>{ic("phone")}</i><span><small>Direkt sprechen, Mo bis Fr 8 bis 17 Uhr</small>{FIRMA["tel"]}</span></a>{rating("on-dark")}</div>
 </div>
 <div class="hero-media">
 <div class="frame grade">{pic("garten-heckenschere", "Lächelnder WOHLverde-Mitarbeiter mit Heckenschere auf einer Gewerbefläche", d, "(max-width: 960px) 100vw, 40vw", eager=True)}</div>
@@ -388,7 +406,7 @@ def page_home():
 </div></section>
 
 <section class="sec--tight"><div class="wrap">
-<p class="eyebrow" style="justify-content:center;width:100%">Unternehmen und Einrichtungen, die uns vertrauen</p>
+<div class="trust"><div>{rating("big")}</div><p class="eyebrow" style="margin:0">Unternehmen und Einrichtungen, die uns vertrauen</p></div>
 {refs_html()}
 </div></section>
 
@@ -445,6 +463,7 @@ def page_leistung(l):
 <h1>{l["h1"]}</h1>
 <p class="lead">{l["intro"]}</p>
 <div class="btns">{btn("../kontakt/#anfrage-form", "Angebot anfragen")}<a class="btn btn--ghost" href="tel:{FIRMA["tel_int"]}"><span>{FIRMA["tel"]}</span>{ic("phone")}</a></div>
+<div style="margin-top:22px">{rating("on-dark")}</div>
 </div>
 <div class="phead-media">{art(l["kopf_art"], d, "frame") if l.get("kopf_art") else '<div class="frame grade">' + pic(l["bild"], l["bild_alt"], d, "(max-width: 860px) 100vw, 45vw", eager=True) + '</div>'}<span class="chip">{l["chip"]}</span></div>
 </div></section>
@@ -534,6 +553,7 @@ def page_ort(o):
 <h1>Gebäudereinigung &amp; Grünpflege in {n}</h1>
 <p class="lead">{o["intro"]}</p>
 <div class="btns">{btn("../../kontakt/#anfrage-form", "Angebot anfragen")}<a class="btn btn--ghost" href="tel:{FIRMA["tel_int"]}"><span>{FIRMA["tel"]}</span>{ic("phone")}</a></div>
+<div style="margin-top:22px">{rating("on-dark")}</div>
 </div>
 <div class="phead-media"><div class="frame grade">{pic(o["bild"], o["bild_alt"], d, "(max-width: 860px) 100vw, 45vw", eager=True)}</div><span class="chip">{o["zeile"]}</span></div>
 </div></section>
@@ -662,7 +682,7 @@ def extras():
     write("sitemap.xml", sm)
     write("robots.txt", f"User-agent: *\nAllow: /\nDisallow: /anfrage-senden.php\n\nSitemap: {DOMAIN}/sitemap.xml\n")
     lines = [f"# WOHLverde", "", f"> {FIRMA['kurz']}", "",
-             "WOHLverde (früher H&G WOHL) ist ein Dienstleister für Objektbetreuung mit Sitz in Forst (Baden), gegründet im Oktober 2020 von Nico Sica. "
+             f"Google-Bewertung: {FIRMA['sterne']} von 5 Sternen bei {FIRMA['rezensionen']} Rezensionen (Stand Oktober 2026): {FIRMA['google']}\n\n" "WOHLverde (früher H&G WOHL) ist ein Dienstleister für Objektbetreuung mit Sitz in Forst (Baden), gegründet im Oktober 2020 von Nico Sica. "
              "Über 20 festangestellte, deutschsprachige Mitarbeitende. Keine Subunternehmen. Zielgruppe: Unternehmen, Gewerbeimmobilien, Hausverwaltungen, Industrie und Kommunen; auf Anfrage auch Privatkunden.", "",
              "## Kontakt", f"- Adresse: Kronauer Allee 1, 76694 Forst, Deutschland", f"- Telefon: {FIRMA['tel']}", f"- E-Mail: {FIRMA['mail']}",
              "- Erreichbarkeit: Montag bis Freitag 8 bis 17 Uhr, Samstag nach Vereinbarung", f"- Angebot anfragen: {DOMAIN}/kontakt/", "",

@@ -44,3 +44,12 @@ Stand: 09.10.2026, gebaut von Awan Tofik (AO Consulting) mit Claude.
 - Das Formular steht auf der Startseite, auf allen Leistungs- und Ortsseiten und auf der Kontaktseite (gleiches Formular, gleiches Skript). Grund: Google-Ads-Besucher landen auf einer Unterseite und sollen dort ohne weiteren Klick anfragen können.
 - Jede Anfrage-Mail enthält "Gesendet von: /seite/" und, falls in der Adresse vorhanden, utm-Parameter und gclid. So sieht Nico ohne Cookies, welche Seite und welche Kampagne Anfragen bringt.
 - Mit der Google-Ads-Kennung zählt zusätzlich die Conversion "Anfrage gesendet" auf jeder dieser Seiten.
+
+
+## Neue Seiten (Stand 09.10.2026, abends)
+
+- Einzelleistungen: Unterhaltsreinigung, Glas- und Fensterreinigung, Treppenhausreinigung (unter Gebäudereinigung), Baumpflege, Hecken- und Gehölzschnitt, Unkrautbeseitigung (unter Grünpflege). Inhalte nur aus dem bestehenden Leistungsumfang, keine Preise.
+- Referenzen: Kundenliste (Einwilligungen im Ordner KundenLogo), Vorher/Nachher, Google-Bewertung. Für echte Fallbeispiele (Objekt, Fläche, Rhythmus, Foto) braucht es Angaben von Nico.
+- Ratgeber: 3 Artikel (Unterhalts- vs. Grundreinigung, Grünpflege im Jahresverlauf, Winterdienst für Gewerbe). Rechtliche Hinweise bewusst allgemein gehalten (Bundesnaturschutzgesetz Schnittzeiten, Gemeindesatzungen beim Winterdienst). Vor Livegang kurz von Nico gegenlesen lassen.
+- Danke-Seite /danke/ nach erfolgreicher Anfrage (noindex). Für Google Ads später als Conversion-Ziel nutzbar.
+- Bewusst nicht gebaut: weitere Ortsseiten ohne echten Ortsbezug (Gefahr von dünnem Inhalt).

@@ -115,7 +115,7 @@
           if (j && j.ok) {
             msg.className = "form-msg ok";
             msg.textContent = "Danke! Ihre Anfrage ist bei uns angekommen. Wir melden uns in der Regel innerhalb eines Werktags.";
-            form.reset(); btn.querySelector("span").textContent = "Gesendet"; if (window.aoConversion) window.aoConversion("anfrage");
+            form.reset(); btn.querySelector("span").textContent = "Gesendet"; if (window.aoConversion) window.aoConversion("anfrage"); setTimeout(function () { location.href = BASE + "danke/"; }, 600);
           } else { throw new Error("x"); }
         })
         .catch(function () {

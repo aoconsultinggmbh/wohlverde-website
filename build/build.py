@@ -56,7 +56,7 @@ def art(kind, depth, cls=""):
     k2 = f'<img class="art-ic k2" src="{p}assets/icons/{neben}_neg.png" alt="">' if neben else ""
     return f'<div class="art {cls}" aria-hidden="true">{teile}<img class="art-ic" src="{p}assets/icons/{haupt}_neg.png" alt="">{k2}</div>'
 
-FOCUS = {'fahrzeug-transporter': (50, 45), 'garten-graeser': (50, 22), 'garten-hecke-sommer': (60, 13), 'garten-heckenschere': (45, 15), 'garten-maeher': (52, 17), 'garten-pflanzen': (48, 15), 'hausmeister-kehren': (45, 38), 'hausmeister-portrait': (50, 20), 'hausmeister-runde': (45, 22), 'hausmeister-fenster': (55, 30), 'juni-portrait-hut': (52, 22), 'marke-schild': (52, 30), 'nachher-pflaster': (50, 50), 'vorher-pflaster': (50, 50), 'objekt-abstimmung': (50, 19), 'reinigung-buero': (55, 12), 'reinigung-buero-wisch': (35, 12), 'reinigung-duo': (55, 15), 'reinigung-fenster': (52, 27), 'reinigung-fenster-ruecken': (50, 40), 'reinigung-tisch': (50, 22), 'reinigung-treppe-ruecken': (45, 30), 'reinigung-treppenhaus': (40, 30), 'team-azubi': (50, 20), 'team-baum': (50, 45), 'team-fahrzeug': (50, 45), 'team-gruppe': (50, 35), 'team-unterwegs': (50, 50)}  # Gesichtsposition in Prozent (x, y), damit kein Kopf abgeschnitten wird
+FOCUS = {'baum-motorsaege': (47, 12), 'baum-schnitt': (75, 20), 'baum-kletterer': (55, 35), 'baum-ast': (50, 40), 'fahrzeug-transporter': (50, 45), 'garten-graeser': (50, 22), 'garten-hecke-sommer': (60, 13), 'garten-heckenschere': (45, 15), 'garten-maeher': (52, 17), 'garten-pflanzen': (48, 15), 'hausmeister-kehren': (45, 38), 'hausmeister-portrait': (50, 20), 'hausmeister-runde': (45, 22), 'hausmeister-fenster': (55, 30), 'juni-portrait-hut': (52, 22), 'marke-schild': (52, 30), 'nachher-pflaster': (50, 50), 'vorher-pflaster': (50, 50), 'objekt-abstimmung': (50, 19), 'reinigung-buero': (55, 12), 'reinigung-buero-wisch': (35, 12), 'reinigung-duo': (55, 15), 'reinigung-fenster': (52, 27), 'reinigung-fenster-ruecken': (50, 40), 'reinigung-tisch': (50, 22), 'reinigung-treppe-ruecken': (45, 30), 'reinigung-treppenhaus': (40, 30), 'team-azubi': (50, 20), 'team-baum': (50, 45), 'team-fahrzeug': (50, 45), 'team-gruppe': (50, 35), 'team-unterwegs': (50, 50)}  # Gesichtsposition in Prozent (x, y), damit kein Kopf abgeschnitten wird
 
 def pre(depth):  # relativer Pfad zur Wurzel
     return "../" * depth
@@ -162,7 +162,7 @@ def header(depth, active=""):
 <nav class="nav" id="hauptnav" aria-label="Hauptnavigation">
 <div class="dd"><button class="navbtn" aria-expanded="false" aria-haspopup="true">Leistungen <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button><div class="dd-menu">{dd}</div></div>
 <div class="dd"><button class="navbtn" aria-expanded="false" aria-haspopup="true">Einsatzgebiet <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button><div class="dd-menu dd-orte">{dd_orte}</div></div>
-{a("ueber-uns/", "Über uns", "ueber")}
+<div class="dd"><button class="navbtn" aria-expanded="false" aria-haspopup="true">Über uns <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button><div class="dd-menu dd-orte"><a href="{p}ueber-uns/"><span class="pin">{ic("users")}</span><span>Über uns<small>Team, Werte, Geschichte</small></span></a><a href="{p}referenzen/"><span class="pin">{ic("star")}</span><span>Referenzen<small>Kunden und Ergebnisse</small></span></a><a href="{p}ratgeber/"><span class="pin">{ic("doc")}</span><span>Ratgeber<small>Wissen für Objektverantwortliche</small></span></a></div></div>
 <a href="{FIRMA["karriere"]}" rel="noopener">Karriere</a>
 {a("kontakt/", "Kontakt", "kontakt")}
 <a class="btn" href="{p}kontakt/#anfrage-form"><span>Angebot anfragen</span></a>
@@ -174,7 +174,7 @@ def header(depth, active=""):
 
 def footer(depth):
     p = pre(depth)
-    lst = "".join(f'<li><a href="{p}{l["url"].lstrip("/")}">{l["name"]}</a></li>' for l in LEISTUNGEN)
+    lst = "".join(f'<li><a href="{p}{l["url"].lstrip("/")}">{l["name"]}</a></li>' for l in LEISTUNGEN) + "".join(f'<li class="sub"><a href="{p}{dt["parent"].lstrip("/")}{dt["slug"]}/">{dt["name"]}</a></li>' for dt in DETAILS)
     orte = "".join(f'<li><a href="{p}einsatzgebiet/{o["slug"]}/">{o["name"]}</a></li>' for o in ORTE)
     return f'''</main>
 <footer class="foot">
@@ -187,7 +187,7 @@ def footer(depth):
 <div class="soc"><a href="{FIRMA["instagram"]}" rel="noopener" aria-label="WOHLverde auf Instagram">{ic("insta")}</a><a href="{FIRMA["facebook"]}" rel="noopener" aria-label="WOHLverde auf Facebook">{ic("fb")}</a></div>
 </div>
 <div><h4>Leistungen</h4><ul>{lst}</ul></div>
-<div><h4>Einsatzgebiet</h4><ul>{orte}<li><a href="{p}einsatzgebiet/">Alle Orte</a></li></ul></div>
+<div><h4>Einsatzgebiet</h4><ul>{orte}<li><a href="{p}einsatzgebiet/">Alle Orte</a></li></ul><h4 style="margin-top:28px">WOHLverde</h4><ul><li><a href="{p}ueber-uns/">Über uns</a></li><li><a href="{p}referenzen/">Referenzen</a></li><li><a href="{p}ratgeber/">Ratgeber</a></li></ul></div>
 <div><h4>Kontakt</h4><ul>
 <li>WOHLverde<br>Kronauer Allee 1<br>76694 Forst</li>
 <li><a href="tel:{FIRMA["tel_int"]}">{FIRMA["tel"]}</a></li>
@@ -446,7 +446,14 @@ def page_leistung(l):
                "audience": {"@type": "BusinessAudience", "name": "Unternehmen, Hausverwaltungen, Kommunen"},
                "hasOfferCatalog": {"@type": "OfferCatalog", "name": l["name"], "itemListElement": [{"@type": "Offer", "itemOffered": {"@type": "Service", "name": t}} for t, _ in l["punkte"]]}}
     schema = ld(service, crumbs_schema(crumbs), faq_schema(l["faq"]), page_url=url, page_name=title, desc=desc)
-    punkte = "".join(f'<div class="feat rv d{i % 2}"><div class="ic"><img src="../assets/icons/{l["icon"]}_neg.png" alt="" width="36" height="36"></div><div><h3>{t}</h3><p>{x}</p></div></div>' for i, (t, x) in enumerate(l["punkte"]))
+    DMAP = {"Hecken- und Gehölzschnitt": "heckenschnitt", "Baumpflege": "baumpflege", "Unkrautbeseitigung": "unkrautbeseitigung",
+            "Unterhalts- und Büroreinigung": "unterhaltsreinigung", "Treppenhausreinigung": "treppenhausreinigung", "Glas- und Fensterreinigung": "glasreinigung"}
+    def feat(i, t, x):
+        inner = f'<div class="ic"><img src="../assets/icons/{l["icon"]}_neg.png" alt="" width="36" height="36"></div><div><h3>{t}</h3><p>{x}</p>'
+        if t in DMAP:
+            return f'<a class="feat feat--link rv d{i % 2}" href="{DMAP[t]}/">{inner}<span class="more">Mehr erfahren {ic("arrow")}</span></div></a>'
+        return f'<div class="feat rv d{i % 2}">{inner}</div></div>'
+    punkte = "".join(feat(i, t, x) for i, (t, x) in enumerate(l["punkte"]))
     others = [o for o in LEISTUNGEN if o["url"] != url]
     other = "".join(f'<a class="place place--solid rv d{i}" href="../{o["url"].lstrip("/")}"><b>{o["name"]}</b><span>{o["dd"]} {ic("arrow")}</span></a>' for i, o in enumerate(others))
     body = f'''
@@ -620,6 +627,171 @@ def page_ueber():
 '''
     write("ueber-uns/index.html", head(title, desc, url, d, schema, og_img="team-gruppe.jpg") + header(d, "ueber") + body + footer(d))
 
+def page_detail(dt):
+    d = 2
+    parent = next(l for l in LEISTUNGEN if l["url"] == dt["parent"])
+    url = dt["parent"] + dt["slug"] + "/"
+    crumbs = [("Startseite", "/"), (parent["name"], dt["parent"]), (dt["name"], url)]
+    service = {"@type": "Service", "@id": DOMAIN + url + "#leistung", "name": dt["name"], "serviceType": dt["name"], "description": dt["kurz"],
+               "provider": {"@id": ORG_ID}, "isRelatedTo": {"@type": "Service", "name": parent["name"], "url": DOMAIN + parent["url"]},
+               "areaServed": [{"@type": "City", "name": o} for o in EINSATZORTE_ALLE]}
+    schema = ld(service, crumbs_schema(crumbs), faq_schema(dt["faq"]), page_url=url, page_name=dt["title"], desc=dt["desc"])
+    umfang = "".join(f"<li>{u}</li>" for u in dt["umfang"])
+    fuer = "".join(f"<span>{f}</span>" for f in dt["fuer"])
+    geschw = [x for x in DETAILS if x["parent"] == dt["parent"] and x["slug"] != dt["slug"]]
+    rel = "".join(f'<a class="place place--solid rv d{i}" href="../{x["slug"]}/"><b>{x["name"]}</b><span>Mehr erfahren {ic("arrow")}</span></a>' for i, x in enumerate(geschw))
+    rel += f'<a class="place place--solid rv d{len(geschw)}" href="../"><b>Alles zu {parent["name"]}</b><span>Übersicht {ic("arrow")}</span></a>'
+    vn = ""
+    if dt.get("vn"):
+        vn = f"""<section class="sec sand"><div class="wrap vn">
+<div class="rv"><span class="eyebrow">Vorher und nachher</span><h2>Ergebnisse, die man <span class="hl">sieht</span>.</h2><p class="lead">Pflasterfläche auf einem Firmengelände. Gleiche Stelle, ein Arbeitseinsatz.</p></div>
+<div class="vn-pics"><figure class="rv">{pic("vorher-pflaster", "Pflasterfläche mit Unkraut, vor dem Einsatz", d, "(max-width: 900px) 50vw, 25vw", w=1050, h=1400)}<span class="lbl l1">Vorher</span></figure>
+<figure class="rv d2">{pic("nachher-pflaster", "Dieselbe Pflasterfläche nach der Unkrautbeseitigung", d, "(max-width: 900px) 50vw, 25vw", w=1050, h=1400)}<span class="lbl l2">Nachher</span></figure></div>
+</div></section>"""
+    body = f"""
+<section class="phead"><div class="wrap phead-grid">
+<div>{crumbs_html(crumbs, d)}
+<span class="eyebrow" style="color:var(--lime)">{parent["name"]}</span>
+<h1>{dt["h1"]}</h1>
+<p class="lead">{dt["intro"]}</p>
+<div class="btns">{btn("#anfrage-form", "Angebot anfragen")}<a class="btn btn--ghost" href="tel:{FIRMA["tel_int"]}"><span>{FIRMA["tel"]}</span>{ic("phone")}</a></div>
+<div style="margin-top:22px">{rating("on-dark")}</div>
+</div>
+<div class="phead-media"><div class="frame grade">{pic(dt["bild"], dt["bild_alt"], d, "(max-width: 860px) 100vw, 45vw", eager=True, w=1200, h=1600 if dt["bild"]=="baum-kletterer" else 1800)}</div><span class="chip">Raum Bruchsal &amp; Karlsruhe</span></div>
+</div></section>
+
+<section class="sec"><div class="wrap split">
+<div class="rv"><span class="eyebrow">Leistungsumfang</span><h2>Was dazugehört</h2>
+<p class="kurz"><strong>Kurz gesagt:</strong> {dt["kurz"]}</p>
+<ul class="checks cols">{umfang}</ul>
+<p style="margin:26px 0 10px;font-weight:700;color:var(--petrol)">Für wen</p><div class="fuer" style="justify-content:flex-start;margin:0">{fuer}</div></div>
+<div class="split-media rv d1"><div class="frame grade para reveal-img">{pic(dt["bild2"], dt["bild2_alt"], d)}</div></div>
+</div></section>
+{vn}
+<section class="sec dark"><div class="wrap">
+<div class="mitte rv"><span class="eyebrow">Ablauf</span><h2>So starten wir gemeinsam.</h2></div>
+{steps_html(True)}
+</div></section>
+
+<section class="sec"><div class="wrap faq-grid">
+<div class="rv"><span class="eyebrow">Fragen und Antworten</span><h2>{dt["name"]}: gut zu wissen.</h2></div>
+{faq_html(dt["faq"])}
+</div></section>
+
+<section class="sec--tight sand"><div class="wrap">
+<span class="eyebrow">Weitere Leistungen</span><h2 style="margin-bottom:28px">Passt dazu</h2>
+<div class="places places--3">{rel}</div>
+</div></section>
+{form_section(d, f"Angebot für {dt['name']} anfragen.")}
+"""
+    write(url.strip("/") + "/index.html", head(dt["title"], dt["desc"], url, d, schema, og_img=dt["bild"] + ".jpg") + header(d) + body + footer(d))
+
+def page_referenzen():
+    d = 1
+    url = "/referenzen/"
+    title = "Referenzen: Kunden und Ergebnisse | WOHLverde"
+    desc = "Unternehmen und Einrichtungen, die WOHLverde vertrauen, Google-Bewertung 5,0 und Ergebnisse aus der Praxis. Grünpflege, Gebäudereinigung und Hausmeisterservice im Raum Bruchsal und Karlsruhe."
+    crumbs = [("Startseite", "/"), ("Referenzen", url)]
+    schema = ld(crumbs_schema(crumbs), page_url=url, page_name=title, desc=desc, page_type="CollectionPage")
+    kunden = "".join(f'<div class="kunde rv d{i % 4}"><span class="pin">{ic("shield")}</span><b>{k}</b></div>' for i, k in enumerate(REFERENZEN))
+    body = f"""
+<section class="phead"><div class="wrap phead-grid">
+<div>{crumbs_html(crumbs, d)}
+<span class="eyebrow" style="color:var(--lime)">Referenzen</span>
+<h1>Vertrauen, das man nachlesen kann.</h1>
+<p class="lead">Unternehmen, Einrichtungen und Hausverwaltungen aus der Region verlassen sich auf WOHLverde. Und bei Google stehen wir bei {FIRMA["sterne"]} Sternen.</p>
+<div style="margin-top:22px">{rating("on-dark")}</div>
+</div>
+<div class="phead-media"><div class="frame grade">{pic("team-gruppe", "Das WOHLverde-Team", d, "(max-width: 860px) 100vw, 45vw", eager=True, w=1800, h=1200)}</div><span class="chip">Seit 2020 in der Region</span></div>
+</div></section>
+
+<section class="sec"><div class="wrap">
+<div class="kopf2"><div class="rv"><span class="eyebrow">Unsere Kunden</span><h2>Diese Unternehmen und Einrichtungen vertrauen uns.</h2></div>
+<div class="rv d1"><p class="lead">Eine Auswahl unserer Kunden, die einer Nennung als Referenz zugestimmt haben. Gern stellen wir auf Anfrage den Kontakt zu Referenzkunden her.</p></div></div>
+<div class="kunden">{kunden}</div>
+</div></section>
+
+<section class="sec sand"><div class="wrap vn">
+<div class="rv"><span class="eyebrow">Ergebnisse</span><h2>Vorher und <span class="hl">nachher</span>.</h2>
+<p class="lead">Unkrautbeseitigung auf der Pflasterfläche eines Firmengeländes. Gleiche Stelle, ein Arbeitseinsatz.</p>
+{btn("../garten-und-landschaftspflege/unkrautbeseitigung/", "Zur Unkrautbeseitigung", "petrol")}</div>
+<div class="vn-pics"><figure class="rv">{pic("vorher-pflaster", "Pflasterfläche mit Unkraut, vor dem Einsatz", d, "(max-width: 900px) 50vw, 25vw", w=1050, h=1400)}<span class="lbl l1">Vorher</span></figure>
+<figure class="rv d2">{pic("nachher-pflaster", "Dieselbe Pflasterfläche nach der Unkrautbeseitigung", d, "(max-width: 900px) 50vw, 25vw", w=1050, h=1400)}<span class="lbl l2">Nachher</span></figure></div>
+</div></section>
+
+<section class="sec dark"><div class="wrap split">
+<div class="rv"><span class="eyebrow">Google-Bewertungen</span><h2>{FIRMA["sterne"]} von 5 Sternen.</h2>
+<p class="lead">Bei {FIRMA["rezensionen"]} Rezensionen auf Google. Lesen Sie selbst, was unsere Kunden über die Zusammenarbeit sagen.</p>
+{btn(FIRMA["google"], "Bewertungen bei Google lesen")}</div>
+<div class="rv d1" style="text-align:center"><div class="big-stars">{ic("star")*5}</div><p class="big-score">{FIRMA["sterne"]}</p></div>
+</div></section>
+{insta_html(d)}
+{form_section(d, "Werden Sie unsere nächste Referenz.")}
+"""
+    write("referenzen/index.html", head(title, desc, url, d, schema, og_img="team-gruppe.jpg") + header(d, "ueber") + body + footer(d))
+
+def page_ratgeber_index():
+    d = 1
+    url = "/ratgeber/"
+    title = "Ratgeber für Objektverantwortliche | WOHLverde"
+    desc = "Wissen rund um Gebäudereinigung, Grünpflege und Winterdienst für Unternehmen, Hausverwaltungen und Kommunen. Kurz und verständlich erklärt von WOHLverde."
+    crumbs = [("Startseite", "/"), ("Ratgeber", url)]
+    schema = ld(crumbs_schema(crumbs), page_url=url, page_name=title, desc=desc, page_type="CollectionPage")
+    karten = "".join(f'<a class="artikel rv d{i}" href="{a["slug"]}/"><div class="frame">{pic(a["bild"], a["bild_alt"], d, "(max-width: 900px) 100vw, 33vw")}</div><div class="artikel-txt"><h3>{a["title"]}</h3><p>{a["teaser"]}</p><span class="more">Weiterlesen {ic("arrow")}</span></div></a>' for i, a in enumerate(RATGEBER))
+    body = f"""
+<section class="phead" style="padding-bottom:56px"><div class="wrap">{crumbs_html(crumbs, d)}
+<span class="eyebrow" style="color:var(--lime)">Ratgeber</span><h1>Wissen für Objektverantwortliche.</h1>
+<p class="lead">Kurze Antworten auf Fragen, die uns Unternehmen, Hausverwaltungen und Kommunen oft stellen.</p></div></section>
+<section class="sec"><div class="wrap"><div class="artikel-grid">{karten}</div></div></section>
+{form_section(d)}
+"""
+    write("ratgeber/index.html", head(title, desc, url, d, schema) + header(d, "ueber") + body + footer(d))
+
+def page_ratgeber(a):
+    d = 2
+    url = f"/ratgeber/{a['slug']}/"
+    crumbs = [("Startseite", "/"), ("Ratgeber", "/ratgeber/"), (a["title"], url)]
+    art_schema = {"@type": "Article", "headline": a["title"], "description": a["desc"], "datePublished": "2026-10-09", "dateModified": TODAY,
+                  "author": {"@id": ORG_ID}, "publisher": {"@id": ORG_ID}, "image": DOMAIN + "/assets/img/" + a["bild"] + ".jpg",
+                  "mainEntityOfPage": DOMAIN + url, "inLanguage": "de-DE"}
+    schema = ld(art_schema, crumbs_schema(crumbs), page_url=url, page_name=a["title"] + " | WOHLverde", desc=a["desc"])
+    teile = "".join(f"<h2>{h}</h2><p>{t}</p>" for h, t in a["abschnitte"])
+    def name_fuer(u):
+        for l in LEISTUNGEN:
+            if l["url"] == u: return l["name"]
+        for dt in DETAILS:
+            if dt["parent"] + dt["slug"] + "/" == u: return dt["name"]
+        return u
+    links = "".join(f'<a class="place place--solid rv d{i}" href="../..{u}"><b>{name_fuer(u)}</b><span>Zur Leistung {ic("arrow")}</span></a>' for i, u in enumerate(a["links"]))
+    andere = "".join(f'<li><a href="../{x["slug"]}/">{x["title"]}</a></li>' for x in RATGEBER if x["slug"] != a["slug"])
+    body = f"""
+<section class="phead" style="padding-bottom:56px"><div class="wrap phead-grid">
+<div>{crumbs_html(crumbs, d)}<span class="eyebrow" style="color:var(--lime)">Ratgeber</span><h1 style="font-size:clamp(32px,3.6vw,56px)">{a["title"]}</h1>
+<p class="lead">{a["teaser"]}</p></div>
+<div class="phead-media"><div class="frame grade">{pic(a["bild"], a["bild_alt"], d, "(max-width: 860px) 100vw, 40vw", eager=True, w=1800 if a["bild"].startswith("team") else 1200, h=1200 if a["bild"].startswith("team") else 1800)}</div></div>
+</div></section>
+<section class="sec"><div class="wrap artikel-wrap">
+<article class="prose rv">
+<p class="kurz-box"><strong>Kurz gesagt:</strong> {a["kurz"]}</p>
+{teile}
+<p class="stand">Stand: Oktober 2026. Dieser Ratgeber ersetzt keine Rechtsberatung.</p>
+</article>
+<aside class="artikel-aside"><h4>Passende Leistungen</h4><div class="places" style="grid-template-columns:1fr">{links}</div><h4 style="margin-top:28px">Weitere Ratgeber</h4><ul class="aside-links">{andere}</ul></aside>
+</div></section>
+{form_section(d)}
+"""
+    write(f"ratgeber/{a['slug']}/index.html", head(a["title"] + " | WOHLverde", a["desc"], url, d, schema, og_img=a["bild"] + ".jpg") + header(d, "ueber") + body + footer(d))
+
+def page_danke():
+    d = 1
+    html_ = head("Danke für Ihre Anfrage | WOHLverde", "Ihre Anfrage ist bei WOHLverde angekommen.", "/danke/", d, "").replace('content="index, follow, max-image-preview:large"', 'content="noindex, nofollow"')
+    body = f"""<section class="phead nf"><div class="wrap"><div class="tl-dot" style="margin:0 auto 26px;background:var(--lime);color:var(--petrol)">{ic("shield")}</div>
+<h1>Danke! Ihre Anfrage ist angekommen.</h1>
+<p class="lead" style="margin:0 auto 28px">Wir melden uns in der Regel innerhalb eines Werktags bei Ihnen. Eine Eingangsbestätigung haben Sie per E-Mail erhalten. Dringend? Rufen Sie uns an: <a href="tel:{FIRMA["tel_int"]}" style="color:var(--lime)">{FIRMA["tel"]}</a></p>
+<div class="btns" style="justify-content:center">{btn("../", "Zur Startseite")}<a class="btn btn--ghost" href="../referenzen/"><span>Referenzen ansehen</span></a></div></div></section>"""
+    write("danke/index.html", html_ + header(d) + body + footer(d))
+
+
 def page_kontakt():
     d = 1
     url = "/kontakt/"
@@ -663,17 +835,17 @@ def page_404():
 <div class="btns" style="justify-content:center"><a class="btn" href="/"><span>Zur Startseite</span>{ic("arrow")}</a><a class="btn btn--ghost" href="/kontakt/"><span>Kontakt</span></a></div></div></section>'''
     out = html_ + header(d) + body + footer(d)
     out = out.replace('href="assets/', 'href="/assets/').replace('src="assets/', 'src="/assets/').replace('href="favicon', 'href="/favicon').replace('href="site.', 'href="/site.')
-    for k in ["einsatzgebiet/", "ueber-uns/", "kontakt/", "impressum/", "datenschutz/", "hinweis-zur-gleichstellung/"] + [l["url"].lstrip("/") for l in LEISTUNGEN]:
+    for k in ["einsatzgebiet/", "ueber-uns/", "kontakt/", "impressum/", "datenschutz/", "hinweis-zur-gleichstellung/", "referenzen/", "ratgeber/"] + [l["url"].lstrip("/") for l in LEISTUNGEN]:
         out = out.replace(f'href="{k}', f'href="/{k}')
     out = out.replace('href="" aria-label="WOHLverde Startseite"', 'href="/" aria-label="WOHLverde Startseite"')
     write("404.html", out)
 
 def extras():
-    urls = ["/"] + [l["url"] for l in LEISTUNGEN] + ["/einsatzgebiet/"] + [f"/einsatzgebiet/{o['slug']}/" for o in ORTE] + ["/ueber-uns/", "/kontakt/"]
+    urls = ["/"] + [l["url"] for l in LEISTUNGEN] + ["/einsatzgebiet/"] + [f"/einsatzgebiet/{o['slug']}/" for o in ORTE] + ["/ueber-uns/", "/kontakt/", "/referenzen/", "/ratgeber/"] + [dt["parent"] + dt["slug"] + "/" for dt in DETAILS] + [f"/ratgeber/{a['slug']}/" for a in RATGEBER]
     sm = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + "".join(
         f"  <url><loc>{DOMAIN}{u}</loc><lastmod>{TODAY}</lastmod></url>\n" for u in urls) + "</urlset>\n"
     write("sitemap.xml", sm)
-    write("robots.txt", f"User-agent: *\nAllow: /\nDisallow: /anfrage-senden.php\n\nSitemap: {DOMAIN}/sitemap.xml\n")
+    write("robots.txt", f"User-agent: *\nAllow: /\nDisallow: /anfrage-senden.php\nDisallow: /danke/\n\nSitemap: {DOMAIN}/sitemap.xml\n")
     lines = [f"# WOHLverde", "", f"> {FIRMA['kurz']}", "",
              f"Google-Bewertung: {FIRMA['sterne']} von 5 Sternen bei {FIRMA['rezensionen']} Rezensionen (Stand Oktober 2026): {FIRMA['google']}\n\n" "WOHLverde (früher H&G WOHL) ist ein Dienstleister für Objektbetreuung mit Sitz in Forst (Baden), gegründet im Oktober 2020 von Nico Sica. "
              "Über 20 festangestellte, deutschsprachige Mitarbeitende. Keine Subunternehmen. Zielgruppe: Unternehmen, Gewerbeimmobilien, Hausverwaltungen, Industrie und Kommunen; auf Anfrage auch Privatkunden.", "",
@@ -682,13 +854,19 @@ def extras():
              "## Leistungen"] + [f"- [{l['name']}]({DOMAIN}{l['url']}): {l['kurz']}" for l in LEISTUNGEN] + ["",
              "## Einsatzgebiet", "Raum Bruchsal, Karlsruhe, Bretten und Umgebung: " + ", ".join(EINSATZORTE_ALLE) + ".", ""] + [f"- [{o['name']}]({DOMAIN}/einsatzgebiet/{o['slug']}/)" for o in ORTE] + ["",
              "## Häufige Fragen"] + [f"- **{q}** {a}" for q, a in FAQ_START] + ["",
-             "## Weitere Seiten", f"- [Über uns]({DOMAIN}/ueber-uns/)", f"- [Karriere]({FIRMA['karriere']})", f"- [Instagram]({FIRMA['instagram']})", f"- [Impressum]({DOMAIN}/impressum/)", ""]
+             "## Einzelleistungen"] + [f"- [{dt['name']}]({DOMAIN}{dt['parent']}{dt['slug']}/): {dt['kurz']}" for dt in DETAILS] + ["", "## Ratgeber"] + [f"- [{a['title']}]({DOMAIN}/ratgeber/{a['slug']}/): {a['kurz']}" for a in RATGEBER] + ["",
+             "## Weitere Seiten", f"- [Über uns]({DOMAIN}/ueber-uns/)", f"- [Referenzen]({DOMAIN}/referenzen/)", f"- [Karriere]({FIRMA['karriere']})", f"- [Instagram]({FIRMA['instagram']})", f"- [Impressum]({DOMAIN}/impressum/)", ""]
     write("llms.txt", "\n".join(lines))
     write("site.webmanifest", json.dumps({"name": "WOHLverde", "short_name": "WOHLverde", "start_url": "/", "display": "standalone", "background_color": "#003a41", "theme_color": "#003a41",
                                          "icons": [{"src": "/assets/img/favicon-192.png", "sizes": "192x192", "type": "image/png"}, {"src": "/assets/img/favicon-512.png", "sizes": "512x512", "type": "image/png"}]}, ensure_ascii=False, indent=1))
 
 if __name__ == "__main__":
     page_home()
+    for dt in DETAILS: page_detail(dt)
+    page_referenzen()
+    page_ratgeber_index()
+    for a in RATGEBER: page_ratgeber(a)
+    page_danke()
     for l in LEISTUNGEN: page_leistung(l)
     page_einsatz()
     for o in ORTE: page_ort(o)

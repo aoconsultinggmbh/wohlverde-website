@@ -204,8 +204,8 @@ def footer(depth):
 <span class="mark" aria-hidden="true">WOHLverde</span>
 </footer>
 <div class="mbar" aria-label="Schnellkontakt"><a class="m1" href="tel:{FIRMA["tel_int"]}">{ic("phone")}Anrufen</a><a class="m2" href="{p}kontakt/#anfrage-form">Angebot anfragen</a></div>
-<script src="{p}assets/js/ao-konfiguration.js?v={VER}"></script>
-<script src="{p}assets/js/einwilligung.js?v={VER}"></script>
+<script src="{p}assets/js/ao-konfiguration.js?v={VER}" defer></script>
+<script src="{p}assets/js/einwilligung.js?v={VER}" defer></script>
 <script src="{p}assets/js/app.js?v={VER}" defer></script>
 </body>
 </html>

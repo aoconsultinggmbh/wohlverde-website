@@ -10,6 +10,7 @@ from inhalte import *  # noqa
 ROOT = os.path.join(os.path.dirname(__file__), "..", "website")
 DOMAIN = "https://wohlverde.de"
 TODAY = datetime.date.today().isoformat()
+VER = datetime.datetime.now().strftime("%Y%m%d%H%M")
 
 # ---------- kleine Helfer ----------
 def esc(s): return html.escape(s, quote=True)
@@ -125,7 +126,7 @@ def head(title, desc, url, depth, schema, og_img="team-fahrzeug.jpg", light=Fals
 <link rel="apple-touch-icon" href="{p}assets/img/apple-touch-icon.png"><link rel="manifest" href="{p}site.webmanifest">
 <link rel="preconnect" href="https://use.typekit.net" crossorigin>
 <link rel="stylesheet" href="https://use.typekit.net/rma2wag.css">
-<link rel="stylesheet" href="{p}assets/css/style.css">
+<link rel="stylesheet" href="{p}assets/css/style.css?v={VER}">
 {schema}
 </head>
 <body>
@@ -185,9 +186,9 @@ def footer(depth):
 </div>
 </footer>
 <div class="mbar" aria-label="Schnellkontakt"><a class="m1" href="tel:{FIRMA["tel_int"]}">{ic("phone")}Anrufen</a><a class="m2" href="{p}kontakt/#anfrage-form">Angebot anfragen</a></div>
-<script src="{p}assets/js/ao-konfiguration.js"></script>
-<script src="{p}assets/js/einwilligung.js"></script>
-<script src="{p}assets/js/app.js" defer></script>
+<script src="{p}assets/js/ao-konfiguration.js?v={VER}"></script>
+<script src="{p}assets/js/einwilligung.js?v={VER}"></script>
+<script src="{p}assets/js/app.js?v={VER}" defer></script>
 </body>
 </html>
 '''

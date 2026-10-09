@@ -595,3 +595,18 @@ h1,h2,h3,.display,.stat b,.step::before,.ticker span,.place b,.badge b,.nf b{fon
 .live.klein{padding:0;background:none;border:0;font-size:13.5px;margin-top:6px;color:var(--beton-2)}
 .live.klein.offen{color:#bdf5cf}
 .light .live.klein,.sand .live.klein{color:var(--muted)}
+
+/* Mobiles Menue: Unschaerfe-Filter der Kopfzeile macht "fixed" kaputt, daher beim offenen Menue aus */
+@media (max-width:1100px){
+  .menu-open .top,.menu-open .top.scrolled{backdrop-filter:none!important;-webkit-backdrop-filter:none!important;background:var(--petrol-9)!important}
+  body.menu-open{overflow:hidden}
+  .menu-open .mbar{transform:translateY(140%)}
+  .nav{height:calc(100dvh - 84px);overscroll-behavior:contain}
+}
+@media (max-width:1100px){
+  .dd-menu{width:auto!important;max-width:none!important}
+  .dd-menu small{white-space:normal}
+  .dd-menu img{filter:brightness(0) invert(1);opacity:.85}
+}
+@media (max-width:1100px){.nav .dd-menu a{white-space:normal!important}.nav .dd-menu a>span{min-width:0}}
+@media (max-width:1100px){.nav>*{flex-shrink:0}.nav .btn{min-height:56px}}

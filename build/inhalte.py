@@ -81,7 +81,7 @@ FAQ_START = [
     ("In welchen Orten ist WOHLverde tätig?", "Unser Standort ist in Forst bei Bruchsal. Wir betreuen Objekte im Raum Bruchsal, Karlsruhe, Bretten und Umgebung, zum Beispiel in Forst, Bruchsal, Karlsruhe, Bretten, Hambrücken, Ubstadt-Weiher, Kronau und Bad Schönborn."),
     ("Arbeitet WOHLverde mit Subunternehmen?", "Nein. Wir arbeiten ausschließlich mit eigenen, festangestellten und deutschsprachigen Mitarbeitenden. So behalten wir die volle Kontrolle über die Qualität."),
     ("Für wen arbeitet WOHLverde?", "Unser Schwerpunkt sind Unternehmen, Gewerbeimmobilien, Industrieflächen, Hausverwaltungen und kommunale Einrichtungen. Auf Anfrage betreuen wir auch Privatkunden."),
-    ("Was kostet die Objektbetreuung bei WOHLverde?", "Das hängt von Größe, Art und gewünschtem Rhythmus ab. Nach einem kostenlosen Vor-Ort-Termin erhalten Sie ein transparent kalkuliertes Angebot mit klar definierten Leistungen."),
+    ("Was kostet die Objektbetreuung bei WOHLverde?", "Das hängt von Größe, Art und gewünschtem Rhythmus ab. Nach einem unverbindlichen Vor-Ort-Termin erhalten Sie ein transparent kalkuliertes Angebot mit klar definierten Leistungen."),
     ("Wie wird WOHLverde von Kunden bewertet?", "Bei Google hat WOHLverde 5,0 von 5 Sternen bei über 60 Rezensionen (Stand Oktober 2026)."),
     ("Ist WOHLverde dasselbe Unternehmen wie H&G WOHL?", "Ja. H&G WOHL heißt jetzt WOHLverde. Team, Service und Qualitätsanspruch bleiben gleich."),
 ]

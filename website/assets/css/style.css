@@ -798,3 +798,9 @@ a.feat--link{text-decoration:none;color:inherit}
 @media (min-width:1101px){.foot .mark{left:0;transform:none}}
 .flogo-link{display:inline-block;transition:opacity .25s}
 .flogo-link:hover{opacity:.8}
+/* Links schieben beim Hovern leicht nach rechts */
+.foot ul a,.foot-bottom nav a,.contact-list a,.dd-menu a>span:last-child{display:inline-block;transition:transform .3s var(--ease),color .25s}
+.foot ul a:hover,.foot-bottom nav a:hover,.contact-list a:hover,.dd-menu a:hover>span:last-child{transform:translateX(7px)}
+.foot ul a:hover,.foot-bottom nav a:hover,.contact-list a:hover{color:var(--lime)}
+@media (prefers-reduced-motion:reduce){.foot ul a:hover,.foot-bottom nav a:hover,.contact-list a:hover,.dd-menu a:hover>span:last-child{transform:none}}
+.light .contact-list a:hover{color:var(--petrol)}

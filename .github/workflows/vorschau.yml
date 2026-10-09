@@ -1,0 +1,45 @@
+name: Vorschau (GitHub Pages)
+
+on:
+  push:
+    branches: [main]
+    paths: ["website/**", ".github/workflows/vorschau.yml"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  bauen:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Vorschau vorbereiten (Suchmaschinen aussperren)
+        shell: bash
+        run: |
+          rm -rf _vorschau && cp -r website _vorschau
+          touch _vorschau/.nojekyll
+          echo "wohlverde.vorschau.ao-consult.de" > _vorschau/CNAME
+          printf 'User-agent: *\nDisallow: /\n' > _vorschau/robots.txt
+          while IFS= read -r f; do
+            sed -i 's|<meta name="robots" content="[^"]*">|<meta name="robots" content="noindex, nofollow">|' "$f"
+          done < <(find _vorschau -name "*.html")
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _vorschau
+  veroeffentlichen:
+    needs: bauen
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /anfrage-senden.php
+
+Sitemap: https://wohlverde.de/sitemap.xml

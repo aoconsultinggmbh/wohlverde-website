@@ -286,6 +286,10 @@ def form_section(depth, title="Lassen Sie uns über Ihr Objekt sprechen.", text=
 <div class="rv d1">{form_html(depth)}</div>
 </div></section>'''
 
+def live(cls=""):
+    """Live-Anzeige "Jetzt erreichbar" (Mo bis Fr 8 bis 17 Uhr), wird in app.js berechnet."""
+    return f'<span class="live {cls}" data-live><i></i><span>Mo bis Fr 8 bis 17 Uhr erreichbar</span></span>'
+
 def rating(cls=""):
     st = ic("star") * 5
     return f'<a class="rating {cls}" href="{FIRMA["google"]}" rel="noopener" aria-label="{FIRMA["sterne"]} von 5 Sternen bei {FIRMA["rezensionen"]} Google-Rezensionen ansehen"><span class="stars">{st}</span><b>{FIRMA["sterne"]}</b><span>{FIRMA["rezensionen"]} Google-Rezensionen</span></a>'
@@ -295,7 +299,7 @@ def contact_list():
 <li><i>{ic("phone")}</i><div><small>Telefon</small><a href="tel:{FIRMA["tel_int"]}">{FIRMA["tel"]}</a></div></li>
 <li><i>{ic("mail")}</i><div><small>E-Mail</small><a href="mailto:{FIRMA["mail"]}">{FIRMA["mail"]}</a></div></li>
 <li><i>{ic("pin")}</i><div><small>Standort</small><a href="https://www.google.com/maps/search/?api=1&amp;query=WOHLverde+Kronauer+Allee+1+76694+Forst" rel="noopener">Kronauer Allee 1, 76694 Forst</a></div></li>
-<li><i>{ic("clock")}</i><div><small>Erreichbarkeit</small><strong>Mo bis Fr 8 bis 17 Uhr, Sa nach Vereinbarung</strong></div></li>
+<li><i>{ic("clock")}</i><div><small>Erreichbarkeit</small><strong>Mo bis Fr 8 bis 17 Uhr, Sa nach Vereinbarung</strong><br>{live("klein")}</div></li>
 </ul>'''
 
 def insta_html(depth):
@@ -346,13 +350,13 @@ def page_home():
 <p class="h1-sub">Drinnen wie draußen.</p>
 <p class="lead">Objektbetreuung für Gewerbeimmobilien, Industrieflächen, Wohnanlagen und Kommunen. Mit festen Teams, festen Ansprechpartnern und dokumentierten Abläufen.</p>
 <div class="btns">{btn("kontakt/#anfrage-form", "Angebot anfragen")}<a class="btn btn--ghost" href="#leistungen"><span>Leistungen entdecken</span></a></div>
-<div class="hero-meta"><a class="hero-call" href="tel:{FIRMA["tel_int"]}"><i>{ic("phone")}</i><span><small>Direkt sprechen, Mo bis Fr 8 bis 17 Uhr</small>{FIRMA["tel"]}</span></a>{rating("on-dark")}</div>
+<div class="hero-meta"><a class="hero-call" href="tel:{FIRMA["tel_int"]}"><i>{ic("phone")}</i><span><small>Direkt sprechen</small>{FIRMA["tel"]}</span></a>{live()}</div>
 </div>
 <div class="hero-media">
 <div class="frame grade">{pic("garten-heckenschere", "Lächelnder WOHLverde-Mitarbeiter mit Heckenschere auf einer Gewerbefläche", d, "(max-width: 960px) 100vw, 40vw", eager=True)}</div>
 <div class="badge b1"><img src="assets/icons/heckenschere_pos.png" alt="" width="36" height="36"><span><b>20+</b>Profis im Team</span></div>
 <div class="badge b2"><span><b>0</b>Subunternehmen</span></div>
-<div class="badge b3"><img src="assets/icons/scheibenabzieher_pos.png" alt="" width="36" height="36"><span>Alles aus<br>einer Hand</span></div>
+<a class="badge b3 badge-rating" href="{FIRMA["google"]}" rel="noopener" aria-label="{FIRMA["sterne"]} von 5 Sternen bei {FIRMA["rezensionen"]} Google-Rezensionen"><span><span class="stars">{ic("star")*5}</span><b>{FIRMA["sterne"]}</b>{FIRMA["rezensionen"]} Google-Rezensionen</span></a>
 </div>
 </div>
 <div class="wrap hero-strip"><ul>

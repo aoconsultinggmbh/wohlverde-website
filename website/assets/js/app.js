@@ -184,6 +184,24 @@
   }
   if (mark) { passen(); window.addEventListener("resize", passen); if (d.fonts && d.fonts.ready) d.fonts.ready.then(passen); }
 
+  /* Live-Status: Mo bis Fr 8 bis 17 Uhr, deutsche Zeit */
+  function liveStatus() {
+    var el = d.querySelectorAll("[data-live]"); if (!el.length) return;
+    var t = {};
+    try {
+      new Intl.DateTimeFormat("en-GB", { timeZone: "Europe/Berlin", weekday: "short", hour: "2-digit", minute: "2-digit", hour12: false })
+        .formatToParts(new Date()).forEach(function (p) { t[p.type] = p.value; });
+    } catch (e) { return; }
+    var tage = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"], wt = tage.indexOf(t.weekday), min = parseInt(t.hour, 10) % 24 * 60 + parseInt(t.minute, 10);
+    var werktag = wt >= 0 && wt <= 4, offen = werktag && min >= 480 && min < 1020, text;
+    if (offen) text = min >= 960 ? "Jetzt erreichbar, noch bis 17 Uhr" : "Jetzt erreichbar, bis 17 Uhr";
+    else if (werktag && min < 480) text = "Geschlossen, heute ab 8 Uhr erreichbar";
+    else if (wt >= 0 && wt <= 3) text = "Geschlossen, morgen ab 8 Uhr erreichbar";
+    else text = "Geschlossen, Montag ab 8 Uhr erreichbar";
+    el.forEach(function (x) { x.classList.toggle("offen", offen); x.querySelector("span").textContent = text; });
+  }
+  liveStatus(); setInterval(liveStatus, 60000);
+
   /* Jahr im Fuss */
   d.querySelectorAll("[data-year]").forEach(function (el) { el.textContent = new Date().getFullYear(); });
 })();

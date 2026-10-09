@@ -179,8 +179,8 @@
   function passen() {
     if (!mark) return;
     mark.style.fontSize = "100px";
-    var ziel = mark.parentElement.clientWidth * 0.94, ist = mark.scrollWidth;
-    if (ist) mark.style.fontSize = Math.floor(100 * ziel / ist) + "px";
+    var ziel = mark.parentElement.clientWidth * 0.99, ist = mark.getBoundingClientRect().width;
+    if (ist) mark.style.fontSize = (100 * ziel / ist).toFixed(2) + "px";
   }
   if (mark) { passen(); window.addEventListener("resize", passen); if (d.fonts && d.fonts.ready) d.fonts.ready.then(passen); }
 

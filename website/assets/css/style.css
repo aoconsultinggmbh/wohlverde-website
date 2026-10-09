@@ -406,7 +406,7 @@ fieldset.fld{border:0;padding:0;margin:0 0 16px}
 .foot{background:var(--petrol-9);color:#c9d8da;padding:clamp(60px,8vw,100px) 0 calc(28px + env(safe-area-inset-bottom))}
 .foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:36px}
 .foot img.flogo{height:46px;width:auto;margin-bottom:20px}
-.foot h4{color:#fff;font-stretch:115%;font-size:16px;margin:0 0 16px;letter-spacing:.02em}
+.foot h4,.foot .foot-h{color:#fff;font-stretch:115%;font-size:16px;margin:0 0 16px;letter-spacing:.02em}
 .foot ul{list-style:none;padding:0;margin:0;display:grid;gap:10px}
 .foot a{color:#c9d8da;text-decoration:none}
 .foot a:hover{color:var(--lime)}
@@ -465,7 +465,7 @@ h1,h2,h3,.display,.stat b,.step::before,.ticker span,.place b,.badge b,.nf b{fon
 .reveal-img{clip-path:inset(12% 12% 12% 12% round 40px);opacity:.3;transition:clip-path 1.2s var(--ease),opacity 1.2s var(--ease)}
 .reveal-img.in{clip-path:inset(0 0 0 0 round var(--radius));opacity:1}
 .hero-media .frame{animation:heroin 1.4s var(--ease) both .15s}
-@keyframes heroin{from{clip-path:inset(30% 20% 0 20% round 200px);transform:translateY(30px)}to{clip-path:inset(0 0 0 0 round 0);transform:none}}
+@keyframes heroin{from{transform:translateY(40px) scale(.94)}to{transform:none}}
 .hl{background-size:0% 100%;background-repeat:no-repeat;background-image:linear-gradient(transparent 62%,var(--lime) 62%,var(--lime) 92%,transparent 92%);background-color:transparent;transition:background-size 1.1s var(--ease) .3s}
 .in .hl,.hl.in,.hero .hl{background-size:100% 100%}
 .head .hl{background-size:100% 100%}
@@ -743,7 +743,7 @@ a.feat--link{text-decoration:none;color:inherit}
 @media (max-width:960px){.artikel-grid{grid-template-columns:1fr}}
 .artikel-wrap{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:clamp(32px,5vw,72px);align-items:start}
 .artikel-aside{position:sticky;top:110px}
-.artikel-aside h4{font-weight:700;color:var(--petrol);margin:0 0 12px}
+.artikel-aside h4,.artikel-aside .aside-h{font-weight:700;color:var(--petrol);margin:0 0 12px}
 .aside-links{list-style:none;padding:0;margin:0;display:grid;gap:10px}
 .aside-links a{color:var(--petrol);font-weight:600}
 .kurz-box{background:#fff;border-left:5px solid var(--lime);border-radius:0 var(--radius-s) var(--radius-s) 0;padding:20px 24px;font-size:clamp(17px,1.3vw,20px);box-shadow:0 10px 30px -20px rgba(0,39,44,.35)}

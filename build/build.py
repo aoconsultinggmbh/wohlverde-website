@@ -3,7 +3,7 @@
 Erzeugt alle HTML-Seiten in ../website aus den Bausteinen unten.
 Aufruf: python3 build/build.py   (aus dem Projektordner)
 Texte stehen in build/inhalte.py, damit Aenderungen ohne HTML-Kenntnisse moeglich sind."""
-import json, os, html, datetime, sys
+import json, os, html, datetime, sys, re
 sys.path.insert(0, os.path.dirname(__file__))
 from inhalte import *  # noqa
 
@@ -65,8 +65,8 @@ def pic(name, alt, depth, sizes="(max-width: 900px) 100vw, 50vw", eager=False, c
     p = pre(depth) + "assets/img/"
     load = 'fetchpriority="high" loading="eager"' if eager else 'loading="lazy"'
     return (f'<picture{(" class=" + chr(34) + cls + chr(34)) if cls else ""}>'
-            f'<source type="image/webp" srcset="{p}{name}-900.webp 900w, {p}{name}.webp {w}w" sizes="{sizes}">'
-            f'<img src="{p}{name}-900.jpg" srcset="{p}{name}-900.jpg 900w, {p}{name}.jpg {w}w" sizes="{sizes}" alt="{esc(alt)}" width="{w}" height="{h}" {load} decoding="async"{(' data-focus="%d %d"' % FOCUS[name]) if name in FOCUS else ""}></picture>')
+            f'<source type="image/webp" srcset="{p}{name}-600.webp 600w, {p}{name}-900.webp 900w, {p}{name}.webp {w}w" sizes="{sizes}">'
+            f'<img src="{p}{name}-900.jpg" srcset="{p}{name}-600.jpg 600w, {p}{name}-900.jpg 900w, {p}{name}.jpg {w}w" sizes="{sizes}" alt="{esc(alt)}" width="{w}" height="{h}" {load} decoding="async"{(' data-focus="%d %d"' % FOCUS[name]) if name in FOCUS else ""}></picture>')
 
 def btn(href, text, kind="", icon="arrow"):
     k = f" btn--{kind}" if kind else ""
@@ -140,7 +140,8 @@ def head(title, desc, url, depth, schema, og_img="og-wohlverde.jpg", light=False
 <link rel="icon" href="{p}favicon.ico" sizes="any"><link rel="icon" type="image/png" href="{p}assets/img/favicon-192.png">
 <link rel="apple-touch-icon" href="{p}assets/img/apple-touch-icon.png"><link rel="manifest" href="{p}site.webmanifest">
 <link rel="preconnect" href="https://use.typekit.net" crossorigin>
-<link rel="stylesheet" href="https://use.typekit.net/rma2wag.css">
+<link rel="preload" as="style" href="https://use.typekit.net/rma2wag.css" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://use.typekit.net/rma2wag.css"></noscript>
 <link rel="stylesheet" href="{p}assets/css/style.css?v={VER}">
 {schema}
 </head>
@@ -186,9 +187,9 @@ def footer(depth):
 <p>Aus <strong>H&amp;G WOHL</strong> wurde <strong>WOHLverde</strong>: gleiches Team, gleicher Anspruch.</p>
 <div class="soc"><a href="{FIRMA["instagram"]}" rel="noopener" aria-label="WOHLverde auf Instagram">{ic("insta")}</a><a href="{FIRMA["facebook"]}" rel="noopener" aria-label="WOHLverde auf Facebook">{ic("fb")}</a></div>
 </div>
-<div><h4>Leistungen</h4><ul>{lst}</ul></div>
-<div><h4>Einsatzgebiet</h4><ul>{orte}<li><a href="{p}einsatzgebiet/">Alle Orte</a></li></ul><h4 style="margin-top:28px">WOHLverde</h4><ul><li><a href="{p}ueber-uns/">Über uns</a></li><li><a href="{p}referenzen/">Referenzen</a></li><li><a href="{p}ratgeber/">Ratgeber</a></li><li><a href="{p}ratgeber/glossar/">Glossar</a></li></ul></div>
-<div><h4>Kontakt</h4><ul>
+<div><p class="foot-h">Leistungen</p><ul>{lst}</ul></div>
+<div><p class="foot-h">Einsatzgebiet</p><ul>{orte}<li><a href="{p}einsatzgebiet/">Alle Orte</a></li></ul><p class="foot-h" style="margin-top:28px">WOHLverde</p><ul><li><a href="{p}ueber-uns/">Über uns</a></li><li><a href="{p}referenzen/">Referenzen</a></li><li><a href="{p}ratgeber/">Ratgeber</a></li><li><a href="{p}ratgeber/glossar/">Glossar</a></li></ul></div>
+<div><p class="foot-h">Kontakt</p><ul>
 <li>WOHLverde<br>Kronauer Allee 1<br>76694 Forst</li>
 <li><a href="tel:{FIRMA["tel_int"]}">{FIRMA["tel"]}</a></li>
 <li><a href="mailto:{FIRMA["mail"]}">{FIRMA["mail"]}</a></li>
@@ -241,7 +242,7 @@ def steps_kacheln(dark=False):
 
 def refs_html():
     s = "".join(f"<span>{r}</span>" for r in REFERENZEN)
-    return f'<div class="refs" role="list" aria-label="Referenzkunden"><div class="refs-in">{s}{s}</div></div>'
+    return f'<div class="refs"><p class="sr-only">Referenzkunden: {", ".join(REFERENZEN)}</p><div class="refs-in" aria-hidden="true">{s}{s}</div></div>'
 
 def cta_html(depth, title="Ihr Objekt verdient einen Partner, der mitdenkt.", text="Erzählen Sie uns kurz, worum es geht. Wir melden uns in der Regel innerhalb eines Werktags und vereinbaren einen Vor-Ort-Termin."):
     p = pre(depth)
@@ -333,8 +334,14 @@ def neuer_tab(html_):
         return tag[:-1] + ' target="_blank" rel="noopener">'
     return _re.sub(r'<a [^>]*href="https?://[^"]*"[^>]*>', f, html_)
 
+def lcp_preload(c):
+    m = re.search(r'<source type="image/webp" srcset="([^"]+)" sizes="([^"]+)"><img [^>]*fetchpriority="high"', c)
+    if not m: return c
+    tag = f'<link rel="preload" as="image" type="image/webp" imagesrcset="{m.group(1)}" imagesizes="{m.group(2)}" fetchpriority="high">\n'
+    return c.replace('<link rel="preconnect" href="https://use.typekit.net"', tag + '<link rel="preconnect" href="https://use.typekit.net"', 1)
+
 def write(path, content):
-    if path.endswith(".html"): content = neuer_tab(content)
+    if path.endswith(".html"): content = lcp_preload(neuer_tab(content))
     full = os.path.join(ROOT, path)
     os.makedirs(os.path.dirname(full), exist_ok=True)
     with open(full, "w", encoding="utf-8") as f:
@@ -796,7 +803,7 @@ def page_ratgeber(a):
 {teile}
 <p class="stand">Stand: Oktober 2026. Dieser Ratgeber ersetzt keine Rechtsberatung.</p>
 </article>
-<aside class="artikel-aside"><h4>Passende Leistungen</h4><div class="places" style="grid-template-columns:1fr">{links}</div><h4 style="margin-top:28px">Weitere Ratgeber</h4><ul class="aside-links">{andere}</ul></aside>
+<aside class="artikel-aside"><p class="aside-h">Passende Leistungen</p><div class="places" style="grid-template-columns:1fr">{links}</div><p class="foot-h" style="margin-top:28px">Weitere Ratgeber</p><ul class="aside-links">{andere}</ul></aside>
 </div></section>
 {form_section(d)}
 """

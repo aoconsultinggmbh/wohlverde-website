@@ -659,3 +659,7 @@ h1,h2,h3,.display,.stat b,.step::before,.ticker span,.place b,.badge b,.nf b{fon
 .streifen-item.lime{background:var(--lime);color:var(--petrol)}
 .streifen-item.lime>svg{color:var(--petrol)}
 @media (max-width:760px){.streifen{grid-template-columns:1fr}}
+
+/* Startseite 3.0: Mischung */
+.mix .card:hover{transform:translateY(-5px)}
+.mix .vn .hl,.mix .mitte .hl{background-size:100% 100%}

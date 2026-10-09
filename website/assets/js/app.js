@@ -165,7 +165,7 @@
       deko.appendChild(im);
     }
     sec.insertBefore(deko, sec.firstChild);
-    if (still || RUHIG || !window.matchMedia("(hover: hover)").matches) return;
+    if (still || RUHIG || d.body.classList.contains("mix") || !window.matchMedia("(hover: hover)").matches) return;
     var glow = d.createElement("span"); glow.className = "cursor-glow"; sec.insertBefore(glow, sec.firstChild);
     sec.addEventListener("mousemove", function (e) {
       var r = sec.getBoundingClientRect(), x = e.clientX - r.left, y = e.clientY - r.top;

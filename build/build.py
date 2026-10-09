@@ -795,7 +795,115 @@ def page_home2():
     html_ = head(title, desc, "/", d, schema).replace('content="index, follow, max-image-preview:large"', 'content="noindex, follow"').replace("<body>", '<body class="ruhig">')
     write("startseite-2/index.html", html_ + header(d) + body + footer(d))
 
+def page_home3():
+    """Startseite 3.0: Mischung aus erster und zweiter Fassung zum Vergleich (noindex, nicht in der Sitemap)."""
+    d = 1
+    title = "Startseite 3.0 (Vergleich) | WOHLverde"
+    desc = "Mischfassung der WOHLverde-Startseite zum Vergleich."
+    schema = ld(page_url="/startseite-3/", page_name=title, desc=desc)
+    cls = ["c-a", "c-b", "c-c", "c-d"]
+    cards = "".join(f'''<a class="card {cls[i]} art rv d{i % 2}" href="../{l["url"].lstrip("/")}">{art(l["art"], d)}
+<span class="ic"><img src="../assets/icons/{l["icon"]}_neg.png" alt="" width="38" height="38"></span>
+<h3>{l["name"]}</h3><p>{l["teaser"]}</p><span class="more">Mehr erfahren {ic("arrow")}</span></a>''' for i, l in enumerate(LEISTUNGEN))
+    who = "".join(f"<span>{t}</span>" for t, _ in ZIELGRUPPEN)
+    places = "".join(f'<a class="place rv d{i % 4}" href="../einsatzgebiet/{o["slug"]}/"><b>{o["name"]}</b><span>{o["zeile"]} {ic("arrow")}</span></a>' for i, o in enumerate(ORTE))
+    steps = "".join(f'<li class="rv d{i}"><b>0{i+1}</b><div><h3>{t}</h3><p>{x}</p></div></li>' for i, (t, x) in enumerate(ABLAUF))
+    body = f'''
+<section class="hero">
+<span class="blob b-a"></span><span class="blob b-b"></span>
+<div class="wrap hero-grid">
+<div>
+<span class="eyebrow" style="color:var(--lime)">Grünpflege &amp; Gebäudereinigung im Raum Bruchsal &amp; Karlsruhe</span>
+<h1 class="wordsplit">Wir pflegen, was <span class="l">Werte</span> schafft.</h1>
+<p class="h1-sub">Drinnen wie draußen.</p>
+<p class="lead">Objektbetreuung für Gewerbeimmobilien, Industrieflächen, Wohnanlagen und Kommunen. Mit festen Teams, festen Ansprechpartnern und dokumentierten Abläufen.</p>
+<div class="btns">{btn("#anfrage-form", "Angebot anfragen")}<a class="btn btn--ghost" href="#leistungen"><span>Leistungen entdecken</span></a></div>
+<div class="hero-meta"><a class="hero-call" href="tel:{FIRMA["tel_int"]}"><i>{ic("phone")}</i><span><small>Direkt sprechen</small>{FIRMA["tel"]}</span></a>{live()}</div>
+</div>
+<div class="hero-media">
+<div class="frame grade">{pic("garten-heckenschere", "Lächelnder WOHLverde-Mitarbeiter mit Heckenschere auf einer Gewerbefläche", d, "(max-width: 960px) 100vw, 40vw", eager=True)}</div>
+<div class="badge b1"><img src="../assets/icons/heckenschere_pos.png" alt="" width="36" height="36"><span><b>20+</b>Profis im Team</span></div>
+<a class="badge b3 badge-rating" href="{FIRMA["google"]}" rel="noopener"><span><span class="stars">{ic("star")*5}</span><b>{FIRMA["sterne"]}</b>{FIRMA["rezensionen"]} Google-Rezensionen</span></a>
+</div>
+</div>
+<div class="wrap hero-strip"><ul>
+<li>Festangestellte, deutschsprachige Teams</li><li>Keine Subunternehmen</li><li>Dokumentierte Objektkontrollen</li><li>Seit 2020 in der Region</li>
+</ul></div>
+</section>
+{ticker(["Grünpflege", "Gebäudereinigung", "Hausmeisterservice", "Winterdienst", "Baumpflege", "Glasreinigung", "Unterhaltsreinigung", "Objektbetreuung"])}
+
+<section class="sec" id="leistungen"><div class="wrap">
+<div class="mitte rv"><span class="eyebrow">Unsere Leistungen</span><h2>Ein Partner für Ihr <span class="hl">ganzes Objekt</span>.</h2>
+<p class="lead">WOHLverde ist ein Dienstleister für Objektbetreuung aus Forst bei Bruchsal. Wir übernehmen Grünpflege, Gebäudereinigung, Hausmeisterservice und Winterdienst für Unternehmen, Hausverwaltungen und Kommunen im Raum Bruchsal, Karlsruhe und Bretten, ausschließlich mit eigenem, festangestelltem Personal.</p>
+<div class="fuer">{who}</div></div>
+<div class="bento">{cards}</div>
+</div></section>
+
+<section class="sec dark"><div class="wrap split">
+<div class="rv"><span class="eyebrow">Warum WOHLverde</span><h2>Bei uns kennen Sie die Menschen, die bei Ihnen arbeiten.</h2>
+<p class="lead">Kein Wechselpersonal, keine Subunternehmen. Feste Teams, feste Ansprechpartner und regelmäßige Objektkontrollen mit Protokoll. So bleibt Qualität planbar.</p>
+<div class="stats stats--2">
+<div class="stat"><b data-count="20" data-suffix="+">20+</b><span>Kolleginnen und Kollegen</span></div>
+<div class="stat"><b>0</b><span>Subunternehmen</span></div>
+<div class="stat"><b data-count="100" data-suffix=" %">100 %</b><span>festangestellt</span></div>
+<div class="stat"><b>2020</b><span>gegründet in Forst</span></div>
+</div></div>
+<div class="split-media rv d1"><div class="frame grade reveal-img" style="border-radius:var(--radius)">{pic("team-gruppe", "Gruppenfoto des WOHLverde-Teams vor einem Bürogebäude", d, "(max-width: 900px) 100vw, 50vw", w=1800, h=1200)}</div></div>
+</div></section>
+
+<section class="sec"><div class="wrap split">
+<div class="split-media rv"><div class="frame grade para reveal-img">{pic("objekt-abstimmung", "Zwei WOHLverde-Mitarbeitende dokumentieren eine Objektkontrolle auf dem Tablet", d)}</div><span class="tag">Dokumentiert statt versprochen</span></div>
+<div class="rv d1"><span class="eyebrow">Objektservice für Gewerbe</span><h2>Wir sehen hin, bevor es teuer wird.</h2>
+<p class="lead">Regelmäßige Objektkontrollen mit Dokumentation, laufende Instandhaltung und schnelle Reaktion: So bleibt Ihre Immobilie funktional, sicher und im Wert erhalten.</p>
+<ul class="checks cols"><li>Feste Teams und Ansprechpartner</li><li>Schnelle Reaktionszeiten</li><li>Objektkontrollen mit Protokoll</li><li>Kleinreparaturen und Instandhaltung</li></ul>
+{btn("../hausmeister-service/", "Zum Hausmeisterservice", "petrol")}</div>
+</div></section>
+
+<section class="sec sand"><div class="wrap vn">
+<div class="rv"><span class="eyebrow">Vorher und nachher</span><h2>Ergebnisse, die man <span class="hl">sieht</span>.</h2>
+<p class="lead">Unkrautbeseitigung auf der Pflasterfläche eines Firmengeländes. Gleiche Stelle, ein Arbeitseinsatz.</p>
+{btn("../garten-und-landschaftspflege/", "Zur Grünpflege", "petrol")}</div>
+<div class="vn-pics">
+<figure class="rv">{pic("vorher-pflaster", "Pflasterfläche mit Unkraut in den Fugen, vor dem Einsatz", d, "(max-width: 900px) 50vw, 25vw", w=1050, h=1400)}<span class="lbl l1">Vorher</span></figure>
+<figure class="rv d2">{pic("nachher-pflaster", "Dieselbe Pflasterfläche nach der Unkrautbeseitigung", d, "(max-width: 900px) 50vw, 25vw", w=1050, h=1400)}<span class="lbl l2">Nachher</span></figure>
+</div>
+</div></section>
+
+<section class="sec--tight"><div class="wrap">
+<div class="trust">{rating("big")}<p class="eyebrow" style="margin:0">Unternehmen und Einrichtungen, die uns vertrauen</p></div>
+{refs_html()}
+</div></section>
+
+<section class="sec"><div class="wrap ablauf2">
+<div class="rv"><span class="eyebrow">So läuft die Zusammenarbeit</span><h2>Vier Schritte. Ein fester Ansprechpartner.</h2></div>
+<ol class="liste">{steps}</ol>
+</div></section>
+
+<div class="big-ticker" aria-hidden="true"><div class="ticker-in">{"".join(f"<span>{t}</span>" for t in ["Grünpflege","Gebäudereinigung","Hausmeisterservice","Winterdienst"]*2)}</div></div>
+
+<section class="sec dark"><div class="wrap">
+<div class="mitte rv"><span class="eyebrow">Einsatzgebiet</span><h2>Zu Hause in Forst. Schnell vor Ort in der Region.</h2></div>
+<div class="places">{places}</div>
+<div class="towns rv" style="justify-content:center">{"".join(f"<span>{t}</span>" for t in EINSATZORTE_ALLE)}</div>
+</div></section>
+
+<section class="sec sand"><div class="wrap faq-grid">
+<div class="rv"><span class="eyebrow">Häufige Fragen</span><h2>Kurz und klar beantwortet.</h2><p class="lead">Ihre Frage ist nicht dabei? Rufen Sie uns an, wir antworten gern persönlich.</p></div>
+{faq_html(FAQ_START)}
+</div></section>
+
+{insta_html(d)}
+<section class="sec--tight"><div class="wrap">
+<a class="streifen-item lime rv" href="{FIRMA["karriere"]}" rel="noopener">{ic("users")}<span><small>Karriere bei WOHLverde</small>Mach mit. Feste Teams, echte Perspektiven, auch für Quereinsteiger.</span>{ic("arrow")}</a>
+</div></section>
+
+{form_section(d)}
+'''
+    html_ = head(title, desc, "/", d, schema).replace('content="index, follow, max-image-preview:large"', 'content="noindex, follow"').replace("<body>", '<body class="mix">')
+    write("startseite-3/index.html", html_ + header(d) + body + footer(d))
+
 if __name__ == "__main__":
+    page_home3()
     page_home2()
     page_home()
     for l in LEISTUNGEN: page_leistung(l)

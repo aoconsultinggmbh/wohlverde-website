@@ -164,7 +164,7 @@ def footer(depth):
     lst = "".join(f'<li><a href="{p}{l["url"].lstrip("/")}">{l["name"]}</a></li>' for l in LEISTUNGEN)
     orte = "".join(f'<li><a href="{p}einsatzgebiet/{o["slug"]}/">{o["name"]}</a></li>' for o in ORTE)
     return f'''</main>
-<footer class="foot">
+<footer class="foot"><span class="mark" aria-hidden="true">WOHLverde</span>
 <div class="wrap">
 <div class="foot-grid">
 <div>

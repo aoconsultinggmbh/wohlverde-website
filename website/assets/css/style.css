@@ -553,3 +553,5 @@ h1,h2,h3,.display,.stat b,.step::before,.ticker span,.place b,.badge b,.nf b{fon
 @media (hover:none){.cursor-glow{display:none}}
 .place--solid{background:var(--petrol);border-color:transparent;min-height:160px}
 .place--solid:hover{background:var(--lime);color:var(--petrol)}
+.foot{padding-bottom:calc(clamp(90px,15vw,250px) + env(safe-area-inset-bottom))}
+.foot .mark{bottom:-.2em;-webkit-text-stroke:1.5px rgba(199,215,100,.16)}

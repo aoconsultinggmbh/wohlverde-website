@@ -164,10 +164,6 @@
       deko.appendChild(im);
     }
     sec.insertBefore(deko, sec.firstChild);
-    if (!sec.classList.contains("hero") && !sec.classList.contains("cta")) {
-      var mk = d.createElement("span"); mk.className = "mark"; mk.setAttribute("aria-hidden", "true"); mk.textContent = "WOHLverde";
-      sec.insertBefore(mk, sec.firstChild);
-    }
     if (still || !window.matchMedia("(hover: hover)").matches) return;
     var glow = d.createElement("span"); glow.className = "cursor-glow"; sec.insertBefore(glow, sec.firstChild);
     sec.addEventListener("mousemove", function (e) {

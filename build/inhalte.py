@@ -10,7 +10,7 @@ FIRMA = {
     "instagram": "https://www.instagram.com/wohlverde/",
     "facebook": "https://www.facebook.com/hausundgartenwohl",
     "karriere": "https://wohlverde-karriere.de/",
-    "google": "https://maps.google.com/?cid=3407328301533018773",
+    "google": "https://www.google.com/maps?cid=3407328301533018773",
     "sterne": "5,0",
     "rezensionen": "über 60",   # Stand 09.10.2026: 61 Rezensionen. Bei Bedarf anpassen.
     "kurz": "WOHLverde aus Forst bei Bruchsal betreut Gewerbeimmobilien, Bürogebäude, Industrieflächen, Wohnanlagen und kommunale Einrichtungen: Grünpflege, Gebäudereinigung, Hausmeisterservice und Winterdienst aus einer Hand, mit festangestelltem Team und ohne Subunternehmen.",
